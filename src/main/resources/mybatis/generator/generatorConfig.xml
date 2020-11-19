@@ -44,7 +44,10 @@
             <columnOverride column="register_end_date" javaType="java.time.LocalTime"/>
         </table>-->
         <!--<table tableName="wcss_batch_setting" domainObjectName="Batch"/>-->
-        <table tableName="dictionary" domainObjectName="Dictionary"/>
+        <!--<table tableName="dictionary" domainObjectName="Dictionary"/>-->
+        <table tableName="wcss_product" domainObjectName="Product"/>
+        <table tableName="wcss_product_image" domainObjectName="Image"/>
+        <table tableName="wcss_sku" domainObjectName="Sku"/>
 
     </context>
 </generatorConfiguration>
