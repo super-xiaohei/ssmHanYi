@@ -1,5 +1,6 @@
 package com.suncaper.demo.service.impl;
 
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.entity.Dictionary;
 import com.suncaper.demo.entity.DictionaryExample;
 import com.suncaper.demo.mapper.DictionaryMapper;
@@ -26,5 +27,13 @@ public class DictionaryServiceImpl implements DictionaryService {
         dictionaryExample.createCriteria().andTypeEqualTo(type).andItemValueEqualTo(value);
         List<Dictionary> dictionaries = dictionaryMapper.selectByExample(dictionaryExample);
         return dictionaries.size() > 0?dictionaries.get(0).getItemName():null;
+    }
+
+    @Override
+    public List<Dictionary> getDictionary(Dictionary dictionary) {
+        DictionaryExample dictionaryExample = new DictionaryExample();
+        dictionaryExample.createCriteria().andTypeEqualTo(dictionary.getType()).andItemValueIsNotNull();
+        List<Dictionary> dictionaries = dictionaryMapper.selectByExample(dictionaryExample);
+        return dictionaries;
     }
 }
