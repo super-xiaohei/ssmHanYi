@@ -51,10 +51,7 @@
     <!-- 导航栏 -->
     <jsp:include page="/WEB-INF/common/header.jsp"/>
     <!-- /.navbar -->
-
     <jsp:include page="/WEB-INF/common/sidebar.jsp"/>
-
-
     <!-- Content Wrapper. 包含页面内容 -->
     <div class="content-wrapper">
         <!-- 内容标题（页面标题） -->
@@ -81,13 +78,87 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <button class="fab  fa-plus-square btn btn-outline-primary" id="createBatch">新建批次</button>
+                                <form class="form-horizontal" action="${PATH}/batch/list" method="get">
+                                    <input type="hidden" name="pageNum" value="1"/>
+                                    <input type="hidden" name="pageSize" value="10"/>
+                                <div class="row">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-inline">
+                                            <div class="layui-unselect layui-form-select">
+                                                <div class="layui-select-title">
+                                                    <input type="text"  id="batchName" name="name" placeholder="批次名称" class="layui-input layui-unselect">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-input-inline">
+                                            <div class="layui-unselect layui-form-select">
+                                                <div class="layui-select-title">
+                                                    <select class="layui-input layui-unselect" id="difLevel" name="difficultyLevel">
+                                                        <%--&lt;%&ndash;<option value="">所有</option>
+                                                        <option value="TSKN">特殊困难</option>
+                                                        <option value="YBKN">一般困难</option>
+                                                        <option value="BKN">不困难</option>&ndash;%&gt;--%>
+                                                    </select>
+                                                    <i class="layui-edge"></i>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div class="layui-input-inline">
+                                            <div class="layui-unselect layui-form-select">
+                                                <div class="layui-select-title">
+                                                    <select class="layui-input layui-unselect" name="active" id="activeStatus">
+                                                        <option value="">所有</option>
+                                                        <option value="1">已激活</option>
+                                                        <option value="0">未激活</option>
+                                                    </select>
+                                                    <i class="layui-edge"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-input-inline" style="width: 60px">
+                                            <div class="layui-unselect layui-form-select">
+                                                <div class="layui-select-title">
+                                                    <button type="submit" class="fab  btn btn-outline-primary" id="query">查询</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <%--<div class="col-2">
+                                        <input type="text" id="batchName" name="name" class="form-control" placeholder="批次名称">
+                                    </div>
+                                    <div class="col-2">
+                                        <select class="form-control" id="difLevel" name="difficultyLevel">
+                                            &lt;%&ndash;<option value="">所有</option>
+                                            <option value="TSKN">特殊困难</option>
+                                            <option value="YBKN">一般困难</option>
+                                            <option value="BKN">不困难</option>&ndash;%&gt;
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <select class="form-control" name="active" id="activeStatus">
+                                            <option value="">所有</option>
+                                            <option value="1">已激活</option>
+                                            <option value="0">未激活</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-0.3">
+                                        <button type="submit" class="fab  btn btn-outline-primary" id="query">查询</button>
+                                    </div>--%>
+                                    <div class="col-3">
+                                        <button type="button" class="fab  btn btn-outline-dark" id="reset">重置</button>&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="fab  btn btn-outline-success" id="createBatch">新建批次</button>&nbsp;&nbsp;&nbsp;
+                                        <button type="button" class="fab  btn btn-outline-danger" id="deletes">删除选中</button>
+                                    </div>
+                                </div>
+                                </form>
+
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
                                     <tr>
+                                        <th><input type="checkbox" id="checkAll"/>&nbsp;&nbsp;全选</th>
                                         <th>批次名称</th>
                                         <th>申请开始时间</th>
                                         <th>申请结束时间</th>
@@ -95,12 +166,13 @@
                                         <th>选衣结束时间</th>
                                         <th>困难等级</th>
                                         <th>激活状态</th>
-                                        <th>操作</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <c:if test="${batchPageInfo.list != null}">
                                         <c:forEach items="${batchPageInfo.list}" var="batch">
                                             <tr>
+                                                <td><input type="checkbox" name="checks" class="myCheck" id="${batch.id}"/></td>
                                                 <td>${batch.name}</td>
                                                 <td><fmt:formatDate value="${batch.applicationStartDate}" type="date"/></td>
                                                 <td><fmt:formatDate value="${batch.applicationEndDate}" type="date"/></td>
@@ -110,6 +182,7 @@
                                                 <td>${batch.active == 0?"未激活":"已激活"}</td>
                                                 <td>
                                                     <button class="btn btn-outline-info">修改</button>
+                                                    <button  id="${batch.id}" class="btn btn-outline-primary end">结束批次</button>
                                                     <button class="btn btn-outline-danger">删除</button>
                                                 </td>
                                             </tr>
@@ -140,11 +213,11 @@
                                     <span>共 ${batchPageInfo.pages} 页</span>&nbsp;&nbsp;&nbsp;
                                     <span>选择每页要显示的数据</span>&nbsp;
                                         <select name="pageSize" id="pageSize" style="width: 50px;">
-                                            <option value="1">1</option>
+                                            <option value="1" selected="selected">1</option>
                                             <option value="2">2</option>
                                             <option value="4">4</option>
                                         </select>&nbsp;&nbsp;&nbsp;
-                                    <span>跳转到<input style="width: 50px;" id="pageNum"/>页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="jump" class="btn btn-outline-success btn-xs">跳转</button></span>
+                                    <span>前往&nbsp;&nbsp;<input style="width: 50px;" id="pageNum"/>&nbsp;&nbsp;页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="jump" class="btn btn-outline-success btn-xs" style="font-size: 10px">跳转</button></span>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -358,9 +431,11 @@
         $('#timepicker').datetimepicker({
             format: 'LT'
         })
-        /*---------------------------------------------------自己写---------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------自己写----------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------自己写----------------------------------------------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------自己写----------------------------------------------------------------------------------------------------------------------------------*/
         $("#createBatch").click(function () {
-            //显示新建批次的模态捐框之前先清空表单,jQuery没有清空表单的功能，转化为dom对象（js）对表单进行清空
+            //显示新建批次的模态框之前先清空表单,jQuery没有清空表单的功能，转化为dom对象（js）对表单进行清空
             $("#batchForm")[0].reset();
             $("#newBatch").modal("show");
         });
@@ -372,7 +447,7 @@
                 dataType:"json",
                 success:function (batch) {
                     if(batch.data != null){
-                        layer.msg("存在已经激活的批次,无法在进行添加",{icon:0,time:1500},function () {
+                        layer.msg("存在已经激活的批次,无法再进行添加",{icon:0,time:1500},function () {
 
                         })
                     }else{
@@ -387,7 +462,7 @@
                                     layer.msg("添加批次成功", {icon: 6, time: 1500}, function () {
                                         $("#newBatch").modal("hide");
                                         //刷新页面
-                                        window.location = "${PATH}/batch/list";
+                                        window.location = "${PATH}/batch/list?pageNum=1&pageSize=10";
                                     })
                                 }
                             }
@@ -425,7 +500,109 @@
             window.location = "${PATH}/batch/list?pageNum=" + pageNum  + "&pageSize=" + ${batchPageInfo.pageSize};
 
         })
-    });
+
+        $.ajax({
+            type:"get",
+            url:"${PATH}/dictionary/getDictionary",
+            data:{type:"DIFFICULTY"},
+            dataType:"json",
+            success:function (res) {
+                $("#difLevel").append($("<option value=''>" + "所有" + "</option>"));
+                $(res.data).each(function (i,index) {
+                    //console.info(index.itemName);
+                    $("#difLevel").append($("<option value='" + index.itemValue + "'>"+ index.itemName + "</option>"))
+                })
+            }
+        })
+
+        $("#query").click(function () {
+
+        })
+
+        $("#reset").click(function () {
+            $("#batchName").val("");
+            $("#difLevel").val("");
+            $("#activeStatus").val("");
+        })
+        
+        $(".end").click(function () {
+            var id = $(this).attr("id");
+            layer.confirm("确定结束该批次吗?",{icon:3,title:"提示"},function(index) {
+                $.ajax({
+                    type:"get",
+                    url:"${PATH}/batch/end?id=" + id,
+                    dataType:"json",
+                    success:function (res) {
+                        window.location = "${PATH}/batch/list?pageNum=1&pageSize=10"
+                    }
+                })
+                layer.close(index);
+            },function (index) {
+
+                    layer.close(index);
+            });
+            return false;
+        })
+
+        $("#checkAll").click(function () {
+            var flag = $(this).prop("checked");
+            $(".myCheck").prop("checked",flag);
+        })
+
+        //判断选中的个数是否和总的个数一致，一致的话全选按钮就下选上，否则不选
+        $("input[name='checks']").click(function () {
+            var length = $("input[name='checks']").length;
+            //console.info(length)
+            var len = 0;
+            $("input[name='checks']").each(function (i, index) {
+                if($(index).prop("checked")){
+                    len++;
+                }
+            })
+            if(len === length){
+                $("#checkAll").prop("checked",true)
+            }else {
+                $("#checkAll").prop("checked",false)
+            }
+        })
+
+
+
+
+       $("#deletes").click(function () {
+            var idList = [];
+           $(".myCheck").each(function (i, index) {
+               if($(index).prop("checked")){
+                   idList.push($(index).attr("id"))
+               }
+           })
+           if(idList.length == 0){
+                layer.msg("请至少选择一条数据",{icon:0,time:1500},function () {
+                })
+               return false;
+            }
+           console.info(idList);
+           layer.confirm("确定要删除选中的批次吗?",{icon:3,title:"提示"},function (index) {
+               $.ajax({
+                   type:"get",
+                   url:"${PATH}/batch/deletes",
+                   data:{ids:idList},
+                   dataType:"json",
+                   success:function (res) {
+                       if(res.code == 200){
+                           layer.msg("删除成功",{icon:6,time:1500},function () {
+                               window.location = "${PATH}/batch/list?pageNum=1&pageSize=10";
+                           })
+                       }
+                   }
+               })
+               layer.close(index)
+           },function (index) {
+               layer.close(index)
+           });
+
+        })
+    })
 </script>
 </body>
 </html>

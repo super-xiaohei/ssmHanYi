@@ -77,7 +77,7 @@
             <!-- /.social-auth-links -->
 
             <p class="mb-1">
-                <a href="forgot-password.html">忘记密码?</a>
+                <a href="${PATH}/user/toRetrievePassword">忘记密码?</a>
             </p>
             <p class="mb-0">
                 <a href="${PATH}/user/toRegist" class="text-center">注册新账号</a>
