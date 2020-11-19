@@ -53,4 +53,9 @@ public class UserController {
     public String regist(){
         return null;
     }
+
+    @RequestMapping("/toRetrievePassword")
+    public String toRetrievePassword(){
+        return "forgotPassword";
+    }
 }
