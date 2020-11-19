@@ -10,6 +10,8 @@ public interface Constant {
 
     //批次激活标志
     Integer AVTIVE_FLAG_TRUE = 1;
+    //批次结束标志
+    Integer AVTIVE_FLAG_FALSE = 0;
 
     //逻辑删除：未删除标记 0
     Integer IS_DELETE_0 = 0;
