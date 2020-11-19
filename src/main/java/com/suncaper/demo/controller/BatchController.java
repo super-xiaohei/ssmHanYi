@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.awt.*;
@@ -53,5 +54,27 @@ public class BatchController {
         PageInfo<Batch> batchPageInfo = batchService.list(batchDto);
         model.addAttribute("batchPageInfo",batchPageInfo);
         return "batchList";
+    }
+
+    @RequestMapping("/end")
+    @ResponseBody
+    public JsonResult end(long id){
+        batchService.end(id);
+        return JsonResult.ok(true);
+    }
+
+    @RequestMapping("/deletes")
+    @ResponseBody
+    public JsonResult deletes(@RequestParam("ids[]") List<Long> ids){
+        batchService.deletes(ids);
+        return JsonResult.ok(true);
+    }
+
+
+    @RequestMapping("/listByAjax")
+    @ResponseBody
+    public JsonResult listByAjax(){
+       List<Batch> list = batchService.listByAjax();
+        return JsonResult.ok(list);
     }
 }
