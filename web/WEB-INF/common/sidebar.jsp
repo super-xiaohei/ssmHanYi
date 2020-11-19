@@ -46,7 +46,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="${PATH}/static/adminlte/index2.html" class="nav-link">
+                                <a href="${PATH}/product/toAdd" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>款式添加</p>
                                 </a>
