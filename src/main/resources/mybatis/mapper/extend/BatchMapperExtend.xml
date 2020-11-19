@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suncaper.demo.mapper.BatchMapper">
+    <resultMap id="BaseResultMapExtend" type="com.suncaper.demo.entity.Batch">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" />
+        <result column="application_start_date" jdbcType="DATE" property="applicationStartDate" />
+        <result column="application_end_date" jdbcType="DATE" property="applicationEndDate" />
+        <result column="register_start_date" jdbcType="DATE" property="registerStartDate" />
+        <result column="register_end_date" jdbcType="DATE" property="registerEndDate" />
+        <result column="difficulty_level" jdbcType="VARCHAR" property="difficultyLevel" />
+        <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+        <result column="active" jdbcType="INTEGER" property="active" />
+        <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    </resultMap>
+
+    <update id="deletes" parameterType="java.util.ArrayList">
+        update wcss_batch_setting set is_deleted = 1 where id in
+        <foreach collection="ids" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+</mapper>
