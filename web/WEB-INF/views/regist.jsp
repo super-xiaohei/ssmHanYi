@@ -116,7 +116,7 @@
                 </a>
             </div>
 
-            <a href="${PATH}/WEB-INF/views/login.jsp" class="text-center">我已经有账号了</a>
+            <a href="${PATH}/index.jsp" class="text-center">我已经有账号了,返回登录</a>
         </div>
         <!-- /.form-box -->
     </div><!-- /.card -->
