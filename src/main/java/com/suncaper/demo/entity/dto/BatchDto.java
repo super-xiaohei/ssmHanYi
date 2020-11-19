@@ -2,11 +2,15 @@ package com.suncaper.demo.entity.dto;
 
 import com.suncaper.demo.entity.Batch;
 
+import java.util.List;
+
 /**
  * @author zyq
  * @date 2020/11/17 - 17:44
  */
 public class BatchDto extends Batch {
+
+    private List<Long> ids;
     private Integer pageNum;
     private Integer pageSize;
 
@@ -14,8 +18,24 @@ public class BatchDto extends Batch {
     }
 
     public BatchDto(Integer pageNum, Integer pageSize) {
+        super();
         this.pageNum = pageNum;
         this.pageSize = pageSize;
+    }
+
+    public BatchDto(List<Long> ids, Integer pageNum, Integer pageSize) {
+        super();
+        this.ids = ids;
+        this.pageNum = pageNum;
+        this.pageSize = pageSize;
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 
     public Integer getPageNum() {
