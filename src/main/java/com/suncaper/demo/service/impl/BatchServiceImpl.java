@@ -42,7 +42,17 @@ public class BatchServiceImpl implements BatchService {
     @Override
     public PageInfo<Batch> list(BatchDto batchDto) {
         BatchExample batchExample = new BatchExample();
-        batchExample.createCriteria().andIsDeletedEqualTo(Constant.IS_DELETE_0);
+        BatchExample.Criteria criteria = batchExample.createCriteria();
+        if(batchDto.getActive() != null && !"".equals(batchDto.getActive())){
+            criteria.andActiveEqualTo(batchDto.getActive());
+        }
+        if(batchDto.getName() != null && !"".equals(batchDto.getName())){
+            criteria.andNameLike("%" + batchDto.getName() + "%");
+        }
+        if(batchDto.getDifficultyLevel() != null && !"".equals(batchDto.getDifficultyLevel())){
+            criteria.andDifficultyLevelEqualTo(batchDto.getDifficultyLevel());
+        }
+        criteria.andIsDeletedEqualTo(Constant.IS_DELETE_0);
         batchExample.setOrderByClause("id desc");
         PageHelper.startPage(batchDto.getPageNum(),batchDto.getPageSize());
         List<Batch> batches = batchMapper.selectByExample(batchExample);
@@ -66,5 +76,29 @@ public class BatchServiceImpl implements BatchService {
             s.setDiffcultyValue(dictionaryService.getNameByValueAndType(Constant.DIFFICULTY_TYPE,s.getDifficultyLevel()));
         });
         return batchPageInfo;
+    }
+
+    @Override
+    public void end(long id) {
+        Batch batch = new Batch();
+        batch.setId(id);
+        batch.setActive(Constant.AVTIVE_FLAG_FALSE);
+        batchMapper.updateByPrimaryKeySelective(batch);
+    }
+
+    @Override
+    public void deletes(List<Long> ids) {
+        ids.add(-1L); //防止万一ids数组中的容量为0出现安全问题
+        batchMapper.deletes(ids);
+    }
+
+    @Override
+    public List<Batch> listByAjax() {
+        BatchExample batchExample = new BatchExample();
+        BatchExample.Criteria criteria = batchExample.createCriteria();
+        criteria.andIsDeletedEqualTo(Constant.IS_DELETE_0);
+        batchExample.setOrderByClause("id desc");
+        List<Batch> batches = batchMapper.selectByExample(batchExample);
+        return batches;
     }
 }
