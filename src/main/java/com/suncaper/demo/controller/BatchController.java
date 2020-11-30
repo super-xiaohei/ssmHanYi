@@ -53,6 +53,8 @@ public class BatchController {
     public String list(BatchDto batchDto, Model model){
         PageInfo<Batch> batchPageInfo = batchService.list(batchDto);
         model.addAttribute("batchPageInfo",batchPageInfo);
+        model.addAttribute("batchDto",batchDto.getDifficultyLevel());
+        model.addAttribute("batchDto",batchDto.getActive());
         return "batchList";
     }
 
