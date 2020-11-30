@@ -81,15 +81,13 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <c:forEach items="${productPageInfo.list}" var="pro">
+                    <c:forEach items="${productList}" var="pro">
                         <div class="col-lg-2" style="margin: 5px">
                             <div class="card" style="padding: -10px">
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner">
-                                            <input type="hidden" name="pageNum" value="1"/>
-                                            <input type="hidden" name="pageSize" value="8"/>
                                             <c:forEach items="${pro.images}" var="img" varStatus="status">
                                                 <c:if test="${status.index == 0}">
                                                     <div class="carousel-item active">
@@ -117,8 +115,6 @@
                                             <%--</a>--%>
                                         <p>款式名: ${pro.name} </p>
                                         <p>编码: ${pro.productNumber} </p>
-                                        <button id="${pro.id}" class="btn btn-outline-primary update" style="margin-top: 10px">修改</button>
-                                        <button id="${pro.id}" class="btn btn-outline-danger delete" style="margin-top: 10px">删除</button>
                                         <button id="${pro.id}" class="btn btn-outline-success select" style="margin-top: 10px">查看</button>
                                     </div>
                                 </div>
@@ -145,9 +141,9 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <!-- form start -->
-                                    <form id="form" class="layui-form" enctype="multipart/form-data" action="${PATH}/product/insert" method="post">
-                                        <input type="hidden" name="pageNum" value="1"/>
-                                        <input type="hidden" name="pageSize" value="8"/>
+                                    <form id="form" class="layui-form" enctype="multipart/form-data">
+
+                                        <input type="hidden" id="proId" name=""/>
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">批次</label>
                                             <div class="layui-input-block">
@@ -176,12 +172,15 @@
                                         </div>
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">规格</label>
-                                            <div class="layui-input-block" id="skus">
+                                            <div class="layui-input-block">
                                                 <%--<button type="button" id="addSku" class="layui-btn">
                                                     <i class="layui-icon">&#xe608;</i> 添加
                                                 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
+                                                    <select lay-ignore id="skus">
+                                                    </select>
                                             </div>
                                         </div>
+
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">图片</label>
                                             <div class="layui-input-block">
@@ -208,12 +207,14 @@
                                                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                                             </div>
                                         </div>--%>
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                            <button type="button" id="choosePro" class="btn btn-success float-right">选衣</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            </div>
+
                         </div>
                         <!-- /.modal-content -->
                     </div>
@@ -238,7 +239,7 @@
                                     <!-- /.card-header -->
                                     <!-- form start -->
                                     <form id="updateForm" class="layui-form" enctype="multipart/form-data" action="${PATH}/product/update" method="post">
-                                        <input type="hidden" name="id" id="proId"/>
+                                        <input type="hidden" name="id" id="proId2"/>
                                         <input type="hidden" name="pageNum" value="1"/>
                                         <input type="hidden" name="pageSize" value="10"/>
                                         <div class="layui-form-item">
@@ -389,44 +390,21 @@
             bsCustomFileInput.init();
         });
 
-        $(".delete").click(function () {
-            var id = $(this).attr("id");
-            //console.info(id);
-            layer.confirm("确定删除该寒衣款式吗？",{icon:5,title:"提示"},function (index) {
-                $.ajax({
-                    type:"get",
-                    dataType:"json",
-                    url:"${PATH}/product/deleteById?id=" + id,
-                    success:function (res) {
-                        if(res.data){
-                            layer.msg("删除成功",{icon:1,time:1500},function () {
-                                window.location = "${PATH}/product/list?pageNum=1&pageSize=8";
-                            })
-                        }else {
-                            layer.msg("删除失败,该批次已经开始选衣!",{icon:0,time:1500},function (index) {
-                                layer.close(index)
-                            })
-                        }
-                    }
-                })
-            },function (index) {
-                layer.close(index);
-            })
-
-        })
 
         $(".select").click(function () {
             var id = $(this).attr("id");
             $.get("${PATH}/product/selectById?id=" + id,function (res) {
                 //console.info(res)
                 //打开模态框之前获取相关信息
+                $("#proId").val(res.data.id);
                 $("#batchName").val(res.data.batch.name);
                 $("#name").val(res.data.name);
                 $("#gender").val(res.data.sexValue)
                 $("#productNumber").val(res.data.productNumber);
                 $("#skus").empty();
+                $("#skus").append($("<option value=''>"+""+"</option>"))
                 $(res.data.skus).each(function (i,index) {
-                    $("#skus").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' readonly name='skuName' value='"+index.name+"' required lay-verify='required' class='layui-input' style='width:100px;height: 39.3px'></p>"))
+                    $("#skus").append($("<option class='skuA' value='"+index.id+"' name='sku'>"+index.name+"</option>"))
                 })
                 $("#imgs").empty()
                 $(res.data.images).each(function (i,index) {
@@ -462,57 +440,44 @@
             })
         })
 
-
-        $(".update").click(function () {
-
-            var id = $(this).attr("id");
-            $.get("${PATH}/product/selectById?id=" + id,function (res) {
-                //console.info(res)
-                $("#proId").val(res.data.id)
-                $("#nameUpdate").val(res.data.name);
-                $("input[type=radio]").each(function (i, index) {
-                   // console.info($(this).val())
-                    if($(index).val() === res.data.gender){
-                        console.info(res.data.gender)
-                        $(index).prop("checked",true)
+        $("#choosePro").click(function () {
+            var proId2 = $("#proId").val();
+            console.info(proId2);
+            var skuId = "";
+            $(".skuA").each(function (i, index) {
+               if($(index).prop("selected")){
+                   skuId = $(index).val();
+                   console.info(skuId)
+               }
+            })
+            if(skuId === ""){
+                layer.msg("请务必要选择款式尺码哦!",{icon:3,time:1500},function () {
+                    return false;
+                })
+                return false;
+            }
+            $.ajax({
+                type:"post",
+                url:"${PATH}/application/updateApp",
+                data:{skuId:skuId,productId:proId2},
+                dataType:"json",
+                success:function (res) {
+                    if(res.data){
+                        layer.msg("选衣成功哦!",{icon:6,time:1500},function () {
+                            $("#productMsg").modal("hide");
+                        })
                     }
-                })
-
-
-                $("#skusUpdate").empty()
-
-                $(res.data.skus).each(function (i,index) {
-                    $("#skusUpdate").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='skuName' value='"+ index.name +"' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
-                    $(".deleteSku").click(function () {
-                        $(this).parent().remove()
-                    })
-                })
-
-
-
-
-                $("#imgsUpdate").empty()
-                $(res.data.images).each(function (i,index) {
-                    $("#imgsUpdate").append($("<p class='custom-control-inline lay-allowClose='true'><img src='${PATH}/static/imgs/" + index.path + "'/><i class='deleteImg layui-icon layui-unselect layui-tab-close'>ဆ</i><input type='hidden' name='oldImg' value='"+ index.path+"'/></p>"))
-                    $(".deleteImg").click(function () {
-                        $(this).parent().remove()
-                    })
-                })
-
-
-                $("#productNumberUpdate").val(res.data.productNumber);
-                $('.textarea').val(res.data.description);
-                $("#productUpdate").modal("show");
-            },"json")
+                }
+            })
         })
 
         layui.use('form', function(){
             var form = layui.form;
             //监听提交
-            /*form.on('submit(formDemo)', function(data){
+            form.on('submit(formDemo)', function(data){
                 layer.msg(JSON.stringify(data.field));
                 return false;
-            });*/
+            });
         });
     })
 </script>

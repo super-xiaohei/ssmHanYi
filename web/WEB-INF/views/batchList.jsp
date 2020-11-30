@@ -42,12 +42,12 @@
     <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <!-- 主题样式 -->
     <link rel="stylesheet" href="${PATH}/static/adminlte/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="${PATH}/static/layui/css/layui.css">
+    <link rel="stylesheet" href="${PATH}/static/layui/dist/css/layui.css">
     <!-- 离线 Google 字体: Source Sans Pro -->
-    <link href="/AdminLTE/AdminLTE-3.x/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <%--<link href="/AdminLTE/AdminLTE-3.x/dist/css/google.css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">--%>
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+
     <!-- 导航栏 -->
     <jsp:include page="/WEB-INF/common/header.jsp"/>
     <!-- /.navbar -->
@@ -78,7 +78,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <form class="form-horizontal" action="${PATH}/batch/list" method="get">
+                                <form class="form-horizontal">
                                     <input type="hidden" name="pageNum" value="1"/>
                                     <input type="hidden" name="pageSize" value="10"/>
                                 <div class="row">
@@ -109,7 +109,7 @@
                                                     <select class="layui-input layui-unselect" name="active" id="activeStatus">
                                                         <option value="">所有</option>
                                                         <option value="1">已激活</option>
-                                                        <option value="0">未激活</option>
+                                                        <option value="0">已结束</option>
                                                     </select>
                                                     <i class="layui-edge"></i>
                                                 </div>
@@ -178,8 +178,8 @@
                                                 <td><fmt:formatDate value="${batch.applicationEndDate}" type="date"/></td>
                                                 <td><fmt:formatDate value="${batch.registerStartDate}" type="date"/></td>
                                                 <td><fmt:formatDate value="${batch.registerEndDate}" type="date"/></td>
-                                                <td>${batch.diffcultyValue}</td>
-                                                <td>${batch.active == 0?"未激活":"已激活"}</td>
+                                                <td id="difValue">${batch.diffcultyValue}</td>
+                                                <td>${batch.active == 0?"已结束":"已激活"}</td>
                                                 <td>
                                                     <button class="btn btn-outline-info">修改</button>
                                                     <button  id="${batch.id}" class="btn btn-outline-primary end">结束批次</button>
@@ -214,8 +214,8 @@
                                     <span>选择每页要显示的数据</span>&nbsp;
                                         <select name="pageSize" id="pageSize" style="width: 50px;">
                                             <option value="1" selected="selected">1</option>
-                                            <option value="2">2</option>
-                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
                                         </select>&nbsp;&nbsp;&nbsp;
                                     <span>前往&nbsp;&nbsp;<input style="width: 50px;" id="pageNum"/>&nbsp;&nbsp;页&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button id="jump" class="btn btn-outline-success btn-xs" style="font-size: 10px">跳转</button></span>
                                 </div>
@@ -229,6 +229,7 @@
             </div>
             <!-- /.container-fluid -->
         </section>
+        <%--添加批次的模态框--%>
         <div class="modal fade" id="newBatch">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -250,7 +251,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label >批次名称</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="批次名称 格式:例 1998-1999">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="批次名称 格式:例 1998-1999 学年">
                                     </div>
                                     <div class="form-group">
                                         <div class="form-group">
@@ -326,7 +327,7 @@
         <!-- 控制侧边栏内容在这里 -->
     </aside>
     <!-- /.control-sidebar -->
-</div>
+
 <!-- ./wrapper -->
 
 <!-- jQuery -->
@@ -362,8 +363,9 @@
 <script src="${PATH}/static/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
 <!-- Bootstrap 开关 -->
 <script src="${PATH}/static/adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<script src="${PATH}/static/layui/layui.js"></script>
+<script src="${PATH}/static/layui/dist/layui.js"></script>
 <script src="${PATH}/static/layer/layer.js"></script>
+
 <!-- 页面脚本 -->
 <script>
     $(function () {
@@ -490,6 +492,7 @@
 
         });
         $("#pageSize").val("${batchPageInfo.pageSize}")
+
         $("#pageSize").change(function () {
             window.location = "${PATH}/batch/list?pageNum=1&pageSize=" + $(this).val();
         })
@@ -515,18 +518,26 @@
             }
         })
 
+
         $("#query").click(function () {
 
         })
+
+
+
+
 
         $("#reset").click(function () {
             $("#batchName").val("");
             $("#difLevel").val("");
             $("#activeStatus").val("");
         })
+
+
         
         $(".end").click(function () {
             var id = $(this).attr("id");
+            console.info(id);
             layer.confirm("确定结束该批次吗?",{icon:3,title:"提示"},function(index) {
                 $.ajax({
                     type:"get",
@@ -552,7 +563,7 @@
         //判断选中的个数是否和总的个数一致，一致的话全选按钮就下选上，否则不选
         $("input[name='checks']").click(function () {
             var length = $("input[name='checks']").length;
-            //console.info(length)
+            console.info(length)
             var len = 0;
             $("input[name='checks']").each(function (i, index) {
                 if($(index).prop("checked")){

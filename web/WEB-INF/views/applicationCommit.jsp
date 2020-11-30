@@ -19,6 +19,35 @@
     <link rel="stylesheet" href="${PATH}/static/layer/mobile/need/layer.css">
 
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/daterangepicker/daterangepicker.css">
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+    <!-- Bootstrap4 Duallistbox -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+    <link rel="stylesheet" href="${PATH}/static/layer/theme/default/layer.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="${PATH}/static/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="${PATH}/static/adminlte/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="${PATH}/static/layui/dist/css/layui.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -31,15 +60,11 @@
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
+                    <label class="layui-form-label"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div class="col-sm-6">
-                        <h1>添加衣服相关信息</h1>
+                        <h1>填写申请理由</h1>
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">主页</a></li>
-                            <li class="breadcrumb-item active">通用表单</li>
-                        </ol>
-                    </div>
+
                 </div>
             </div><!-- /.container-fluid -->
         </section>
@@ -160,74 +185,38 @@
 
 
 
-
-
-                <form class="layui-form" enctype="multipart/form-data" action="${PATH}/product/insert" method="post">
-                    <input type="hidden" name="pageNum" value="1"/>
-                    <input type="hidden" name="pageSize" value="10"/>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">批次</label>
-                        <div class="layui-input-block">
-                            <select class="layui-input layui-unselect" id="batch" name="batchId" >
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">款式</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="name" required lay-verify="required" placeholder="款式" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">性别</label>
-                        <div class="layui-input-block">
-                            <input type="radio" value="M" name="gender" title="男款">
-                            <input type="radio" value="f" name="gender" title="女款" checked>
-                            <input type="radio" value="MF" name="gender" title="男女皆宜">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">编码</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="productNumber" required lay-verify="required" placeholder="编码" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">规格</label>
-                        <div class="layui-input-block" id="sku">
-                            <button type="button" id="addSku" class="layui-btn">
-                                <i class="layui-icon">&#xe608;</i> 添加
-                            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">图片</label>
-                        <div class="layui-input-block">
-                            <div class="layui-upload">
-                                <button type="button" class="layui-btn" id="addImg">多图片上传</button>
-                                <%--<textarea name="description" class="textarea" placeholder="在此处添加商品描述" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
-                            --%><blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">预览图：
-                                    <div class="layui-upload-list" id="img" name='multipartFile'></div>
-                                </blockquote>
-                               </div>
-                        </div>
-                    </div>
-
+                <form id="applicationForm" class="layui-form">
+                   <%-- <div class="layui-form-item layui-form-text">
+                        <textarea rows="30" style="width: 100%" name="applicationReason"></textarea>
+                    </div>--%>
+<%--
                     <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">描述</label>
-                        <div class="layui-input-block">
-                            <%--<textarea name="description" placeholder="在此处添加商品描述" class="layui-textarea"></textarea>--%>
-                                <textarea name="description" class="textarea" placeholder="在此处添加商品描述" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
-                        </div>
-                    </div>
 
-                    <div class="layui-form-item">
                         <div class="layui-input-block">
-                            <button class="layui-btn" type="submit" id="commit">立即提交</button>
-                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                            &lt;%&ndash;<textarea name="description" placeholder="在此处添加商品描述" class="layui-textarea"></textarea>&ndash;%&gt;
+                            <textarea  class="textarea" name="applicationReason" placeholder="在此处填写申请理由" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
+
                         </div>
-                    </div>
+                    </div>--%>
+                       <div class="layui-form-item layui-form-text">
+                           <label class="layui-form-label"></label>
+                           <div class="layui-input-block">
+                               <textarea  name="applicationReason" rows="20" placeholder="在此处填写申请理由" class="layui-textarea"></textarea>
+                           </div>
+                       </div>
+                       <%--<div class="layui-form-item layui-form-text">
+                           <label class="layui-form-label">意见</label>
+                           <div class="layui-input-block">
+                               <textarea name="desc" placeholder="请输入审核意见" class="layui-textarea"></textarea>
+                           </div>
+                       </div>--%>
+
                 </form>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="layui-btn" type="button" id="applicationCommit">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
 
 
 
@@ -263,92 +252,67 @@
 <script src="${PATH}/static/adminlte/plugins/summernote/lang/summernote-zh-CN.min.js"></script>
 <script src="${PATH}/static/layui/dist/layui.js"></script>
 <script src="${PATH}/static/layer/layer.js"></script>
+<script src="${PATH}/static/adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="${PATH}/static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="${PATH}/static/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="${PATH}/static/adminlte/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="${PATH}/static/adminlte/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="${PATH}/static/adminlte/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<!-- AdminLTE App -->
+<script src="${PATH}/static/adminlte/dist/js/adminlte.min.js"></script>
+<!-- 用于演示 AdminLTE  -->
+<script src="${PATH}/static/adminlte/dist/js/demo.js"></script>
 
 
 
 
-<script type="text/javascript">
+<script src="${PATH}/static/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Select2 -->
+<script src="${PATH}/static/adminlte/plugins/select2/js/select2.full.min.js"></script>
+<!-- Bootstrap4 Duallistbox -->
+<script src="${PATH}/static/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+<!-- InputMask -->
+<script src="${PATH}/static/adminlte/plugins/moment/moment.min.js"></script><script src="${PATH}/static/adminlte/plugins/moment/locale/zh-cn.js"></script>
+<script src="${PATH}/static/adminlte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
+<!-- date-range-picker -->
+<script src="${PATH}/static/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- bootstrap color picker -->
+<script src="${PATH}/static/adminlte/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="${PATH}/static/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+<!-- Bootstrap 开关 -->
+<script src="${PATH}/static/adminlte/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="${PATH}/static/layui/dist/layui.js"></script>
+<script src="${PATH}/static/layer/layer.js"></script>
+
+
+
+
+</body>
+</html>
+<script>
     $(document).ready(function () {
         $('.textarea').summernote({lang: 'zh-CN'})
         bsCustomFileInput.init();
     });
-</script>
-</body>
-</html>
-<script>
-
-   /* <input type='text' name='skuName'>*/
-   $("#batch").click(function () {
-       alert(111);
-   })
 
     $(function () {
-        $.ajax({
-            type: "get",
-            url: "${PATH}/batch/listByAjax",
-            dataType: "json",
-            success: function (res) {
-                $(res.data).each(function (i, index) {
-                    $("#batch").append($("<option value='"+index.id+"'>"+index.name+"</option>"))
-                })
-            }
-        })
-
-
-        $("#addSku").click(function () {
-            $("#sku").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='skuName' required lay-verify='required' placeholder='请输入规格' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
-            $(".deleteSku").click(function () {
-                $(this).parent().remove()
+        $("#applicationCommit").click(function () {
+            $.ajax({
+                type:"post",
+                url:"${PATH}/application/insert",
+                data:$("#applicationForm").serialize(),
+                dataType:"json",
+                success:function (res) {
+                   if(res.data){
+                       layer.msg("当前批次您已经提交过一次申请，请勿重复提交",{icon:4,time:1500})
+                   }else {
+                       window.location = "${PATH}/application/listBySn";
+                   }
+                }
             })
         })
-
-        $("#addImg").click(function () {
-            $("#img").append($("<p><input type='file' name='multipartFile' class='form-control' style='width: 200px'/><button type='button' class='deleteImg'>删除</button></p>"))
-            $(".deleteImg").click(function () {
-                $(this).parent().remove()
-            })
-        })
-       /* var length = $("input[name='multipartFile']").length;
-        console.info(length)
-        if(length >= 3){
-            layer.msg("最多只能添加三张图片")
-        }*/
-
-
-
-
-        //单选框的一些layer我也不知道的什么东西，反正没有这个输入框和单选框就出不来
-        layui.use('form', function(){
-            var form = layui.form;
-
-            //监听提交
-            form.on('submit(formDemo)', function(data){
-                layer.msg(JSON.stringify(data.field));
-                return false;
-            });
-        });
-
-        /*//多图片上传
-        layui.use('upload', function(){
-            var s = layui.jquery
-                ,upload = layui.upload;
-            //拖拽上传
-            //多图片上传
-            upload.render({
-                elem: '#addImg'
-                ,url: '${pageContext.request.contextPath}/product/insert' //改成您自己的上传接口
-                ,multiple: true
-                ,before: function(obj){
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function(index, file, result){
-                        $('#img').append('<img name="multipartFile" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
-                    });
-                }
-                ,done: function(res){
-                    layer.msg("上传完毕")
-                }
-            });
-
-        });*/
     })
 </script>
