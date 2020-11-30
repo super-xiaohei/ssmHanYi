@@ -2,19 +2,23 @@ package com.suncaper.demo.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.ibatis.annotations.AutomapConstructor;
 
 import java.util.Date;
 
+
 @Data
 @Accessors(chain = true)
-public class Sku {
+public class FlowSetting {
     private Long id;
 
-    private Long productId;
+    private Integer nodeCode;
 
-    private String name;
+    private String nodeName;
 
-    private Integer isDeleted;
+    private Integer nextNode;
+
+    private Boolean isDeleted;
 
     private Date gmtCreated;
 
