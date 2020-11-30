@@ -1,8 +1,12 @@
 package com.suncaper.demo.controller;
 
+import com.suncaper.demo.common.SessionUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
+import java.util.stream.Stream;
 
 /**
  * @author zyq
@@ -12,5 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/logout")
 public class logoutController {
+
+    @RequestMapping("toLogout")
+    public String logout(){
+        SessionUtils.clearCurUser();
+        return "login";
+    }
 
 }
