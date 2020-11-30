@@ -101,4 +101,29 @@ public class BatchServiceImpl implements BatchService {
         List<Batch> batches = batchMapper.selectByExample(batchExample);
         return batches;
     }
+
+    @Override
+    public Batch selectByPrimaryKey(Long batchId) {
+        return batchMapper.selectByPrimaryKey(batchId);
+    }
+
+    @Override
+    public Batch getCurBatch() {
+        BatchExample batchExample = new BatchExample();
+        BatchExample.Criteria criteria = batchExample.createCriteria();
+        criteria.andIsDeletedEqualTo(Constant.IS_DELETE_0).andActiveEqualTo(Constant.AVTIVE_FLAG_TRUE);
+        List<Batch> batches = batchMapper.selectByExample(batchExample);
+        Batch batch = null;
+        if(batches.size() == 0){
+            //如果数据库中没有已经激活的批次，就获取最近一次创建的批次
+            BatchExample batchExampleLast = new BatchExample();
+            batchExampleLast.createCriteria().andIsDeletedEqualTo(Constant.IS_DELETE_0);
+            batchExampleLast.setOrderByClause("id desc");
+            List<Batch> batchesLast = batchMapper.selectByExample(batchExampleLast);
+            return batchesLast.size() == 0?new Batch():batchesLast.get(0);
+        }
+        batch = batches.get(0);
+        batch.setDiffcultyValue(dictionaryService.getNameByValueAndType(Constant.DIFFICULTY_TYPE,batch.getDifficultyLevel()));
+        return batch;
+    }
 }
