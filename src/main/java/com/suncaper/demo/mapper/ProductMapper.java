@@ -3,9 +3,11 @@ package com.suncaper.demo.mapper;
 import com.suncaper.demo.entity.Product;
 import com.suncaper.demo.entity.ProductExample;
 import java.util.List;
+
+import com.suncaper.demo.mapper.extend.ProductMapperExtend;
 import org.apache.ibatis.annotations.Param;
 
-public interface ProductMapper {
+public interface ProductMapper extends ProductMapperExtend {
     long countByExample(ProductExample example);
 
     int deleteByExample(ProductExample example);

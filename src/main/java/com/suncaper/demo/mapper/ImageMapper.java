@@ -3,9 +3,11 @@ package com.suncaper.demo.mapper;
 import com.suncaper.demo.entity.Image;
 import com.suncaper.demo.entity.ImageExample;
 import java.util.List;
+
+import com.suncaper.demo.mapper.extend.ImageMapperExtend;
 import org.apache.ibatis.annotations.Param;
 
-public interface ImageMapper {
+public interface ImageMapper extends ImageMapperExtend {
     long countByExample(ImageExample example);
 
     int deleteByExample(ImageExample example);

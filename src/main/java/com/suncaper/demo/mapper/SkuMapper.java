@@ -3,9 +3,11 @@ package com.suncaper.demo.mapper;
 import com.suncaper.demo.entity.Sku;
 import com.suncaper.demo.entity.SkuExample;
 import java.util.List;
+
+import com.suncaper.demo.mapper.extend.SkuMapperExtend;
 import org.apache.ibatis.annotations.Param;
 
-public interface SkuMapper {
+public interface SkuMapper extends SkuMapperExtend {
     long countByExample(SkuExample example);
 
     int deleteByExample(SkuExample example);
