@@ -24,4 +24,10 @@ public interface BatchService {
     List<Batch> listByAjax();
 
 
+    Batch selectByPrimaryKey(Long batchId);
+
+    //获取当前批次，这个接口非常重要
+
+    Batch getCurBatch();
+
 }
