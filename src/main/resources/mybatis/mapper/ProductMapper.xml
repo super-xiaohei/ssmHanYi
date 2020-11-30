@@ -7,7 +7,7 @@
     <result column="product_number" jdbcType="VARCHAR" property="productNumber" />
     <result column="batch_id" jdbcType="BIGINT" property="batchId" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
     <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
@@ -132,7 +132,7 @@
       gmt_created, gmt_modified, description
       )
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, 
-      #{batchId,jdbcType=BIGINT}, #{gender,jdbcType=VARCHAR}, #{isDeleted,jdbcType=BIT}, 
+      #{batchId,jdbcType=BIGINT}, #{gender,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, 
       #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -184,7 +184,7 @@
         #{gender,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
+        #{isDeleted,jdbcType=INTEGER},
       </if>
       <if test="gmtCreated != null">
         #{gmtCreated,jdbcType=TIMESTAMP},
@@ -222,7 +222,7 @@
         gender = #{record.gender,jdbcType=VARCHAR},
       </if>
       <if test="record.isDeleted != null">
-        is_deleted = #{record.isDeleted,jdbcType=BIT},
+        is_deleted = #{record.isDeleted,jdbcType=INTEGER},
       </if>
       <if test="record.gmtCreated != null">
         gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
@@ -245,7 +245,7 @@
       product_number = #{record.productNumber,jdbcType=VARCHAR},
       batch_id = #{record.batchId,jdbcType=BIGINT},
       gender = #{record.gender,jdbcType=VARCHAR},
-      is_deleted = #{record.isDeleted,jdbcType=BIT},
+      is_deleted = #{record.isDeleted,jdbcType=INTEGER},
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       description = #{record.description,jdbcType=LONGVARCHAR}
@@ -260,7 +260,7 @@
       product_number = #{record.productNumber,jdbcType=VARCHAR},
       batch_id = #{record.batchId,jdbcType=BIGINT},
       gender = #{record.gender,jdbcType=VARCHAR},
-      is_deleted = #{record.isDeleted,jdbcType=BIT},
+      is_deleted = #{record.isDeleted,jdbcType=INTEGER},
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -283,7 +283,7 @@
         gender = #{gender,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
-        is_deleted = #{isDeleted,jdbcType=BIT},
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
       </if>
       <if test="gmtCreated != null">
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -303,7 +303,7 @@
       product_number = #{productNumber,jdbcType=VARCHAR},
       batch_id = #{batchId,jdbcType=BIGINT},
       gender = #{gender,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       description = #{description,jdbcType=LONGVARCHAR}
@@ -315,7 +315,7 @@
       product_number = #{productNumber,jdbcType=VARCHAR},
       batch_id = #{batchId,jdbcType=BIGINT},
       gender = #{gender,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

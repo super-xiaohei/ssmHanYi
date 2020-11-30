@@ -5,7 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
-    <result column="is_deleted" jdbcType="BIT" property="isDeleted" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
     <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
@@ -105,7 +105,7 @@
       is_deleted, gmt_created, gmt_modified
       )
     values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=BIT}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      #{isDeleted,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.suncaper.demo.entity.Sku">
@@ -141,7 +141,7 @@
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
-        #{isDeleted,jdbcType=BIT},
+        #{isDeleted,jdbcType=INTEGER},
       </if>
       <if test="gmtCreated != null">
         #{gmtCreated,jdbcType=TIMESTAMP},
@@ -170,7 +170,7 @@
         NAME = #{record.name,jdbcType=VARCHAR},
       </if>
       <if test="record.isDeleted != null">
-        is_deleted = #{record.isDeleted,jdbcType=BIT},
+        is_deleted = #{record.isDeleted,jdbcType=INTEGER},
       </if>
       <if test="record.gmtCreated != null">
         gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
@@ -188,7 +188,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       product_id = #{record.productId,jdbcType=BIGINT},
       NAME = #{record.name,jdbcType=VARCHAR},
-      is_deleted = #{record.isDeleted,jdbcType=BIT},
+      is_deleted = #{record.isDeleted,jdbcType=INTEGER},
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -205,7 +205,7 @@
         NAME = #{name,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
-        is_deleted = #{isDeleted,jdbcType=BIT},
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
       </if>
       <if test="gmtCreated != null">
         gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
@@ -220,7 +220,7 @@
     update wcss_sku
     set product_id = #{productId,jdbcType=BIGINT},
       NAME = #{name,jdbcType=VARCHAR},
-      is_deleted = #{isDeleted,jdbcType=BIT},
+      is_deleted = #{isDeleted,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

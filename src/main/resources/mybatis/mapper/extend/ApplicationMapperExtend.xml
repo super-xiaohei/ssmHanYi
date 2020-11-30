@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suncaper.demo.mapper.ApplicationMapper">
+    <select id="statistics" resultType="com.suncaper.demo.entity.vo.StatisticsVo">
+       SELECT COUNT(*) AS "allCount",
+			SUM(IF(`status` = 'TG',1,0)) AS "passCount",
+			SUM(IF(`status`= 'BTG',1,0)) AS "noPassCount",
+			SUM(IF(`status`= 'DSH',1,0)) AS "waitAuditCount"
+	   FROM `wcss_application`;
+    </select>
+</mapper>
