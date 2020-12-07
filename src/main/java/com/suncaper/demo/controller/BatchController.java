@@ -5,12 +5,13 @@ import com.suncaper.demo.common.Constant;
 import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.entity.Batch;
 import com.suncaper.demo.entity.dto.BatchDto;
-import com.suncaper.demo.entity.vo.BatchVo;
+import com.suncaper.demo.service.BatchGradeService;
 import com.suncaper.demo.service.BatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,6 +29,8 @@ public class BatchController {
 
     @Autowired
     private BatchService batchService;
+    @Autowired
+    private BatchGradeService batchGradeService;
 
     @RequestMapping("/toBatchList")
     public String toBatchList(){
@@ -37,11 +40,10 @@ public class BatchController {
     @RequestMapping("/getActiveBatch")
     @ResponseBody
     public JsonResult getActiveBatch(){
-
         return JsonResult.ok(batchService.getActiveBatch());
     }
 
-    @RequestMapping("/save")
+    @RequestMapping(value = "/save",method = RequestMethod.POST)
     @ResponseBody
     public JsonResult save(Batch batch){
         batch.setActive(Constant.AVTIVE_FLAG_TRUE);
@@ -53,8 +55,6 @@ public class BatchController {
     public String list(BatchDto batchDto, Model model){
         PageInfo<Batch> batchPageInfo = batchService.list(batchDto);
         model.addAttribute("batchPageInfo",batchPageInfo);
-        model.addAttribute("batchDto",batchDto.getDifficultyLevel());
-        model.addAttribute("batchDto",batchDto.getActive());
         return "batchList";
     }
 
@@ -78,5 +78,17 @@ public class BatchController {
     public JsonResult listByAjax(){
        List<Batch> list = batchService.listByAjax();
         return JsonResult.ok(list);
+    }
+
+    @RequestMapping("/addGrade")
+    @ResponseBody
+    public JsonResult addGrade(BatchDto batchDto){
+        batchGradeService.addGrade(batchDto);
+        return JsonResult.ok(true);
+    }
+    @RequestMapping("/selectBatchById")
+    @ResponseBody
+    public JsonResult selectBatchById(Long id){
+        return batchService.selectBatchById(id);
     }
 }
