@@ -35,6 +35,4 @@ public class SessionUtils {
         getSession().removeAttribute(LOGIN_USER);
     }
 
-
-
 }
