@@ -36,6 +36,9 @@ public class JsonResult<T> {
     public static JsonResult ok(Object data){
         return new JsonResult(200,data);
     }
+    public static JsonResult fail(Object data){
+        return new JsonResult(500,data);
+    }
 
 
 }
