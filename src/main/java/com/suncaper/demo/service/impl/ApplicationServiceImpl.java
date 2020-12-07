@@ -1,7 +1,7 @@
 package com.suncaper.demo.service.impl;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.suncaper.demo.common.Constant;
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.common.SecurityUtils;
 import com.suncaper.demo.common.SessionUtils;
 import com.suncaper.demo.common.utils.ExcelUtil;
@@ -9,13 +9,9 @@ import com.suncaper.demo.common.utils.formatUtils;
 import com.suncaper.demo.entity.*;
 import com.suncaper.demo.entity.vo.StatisticsVo;
 import com.suncaper.demo.mapper.ApplicationMapper;
-import com.suncaper.demo.mapper.KnrdMapper;
-import com.suncaper.demo.mapper.StudentMapper;
-import com.suncaper.demo.mapper.TeacherMapper;
 import com.suncaper.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.java2d.pipe.AlphaPaintPipe;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,6 +43,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     private FlowSettingService flowSettingService;
     @Autowired
     private AuditHistoryService auditHistoryService;
+    @Autowired
+    private ProductService productService;
     @Override
     public void insert(Application application) {
         //此时application中只有一个applicationReason字段的值，因为只从前端传回来这一个值，所以需要从当前对象中获取更多的值
@@ -213,7 +211,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public void updateApp(Application application) {
+    public boolean updateApp(Application application) {
+        //如果当前款式的库存量是0，则显示
         //首先通过sn和batchid得到用户当前的唯一的申请
         User curUser = SecurityUtils.getCurUser();
         Batch curBatch = batchService.getCurBatch();
@@ -223,7 +222,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application curApp = applications.size() > 0?applications.get(0):null;
         application.setId(curApp.getId());
         //id skuId productId
-        applicationMapper.updateByPrimaryKeySelective(application);
+        return applicationMapper.updateByPrimaryKeySelective(application)!= 0;
     }
 
     @Override

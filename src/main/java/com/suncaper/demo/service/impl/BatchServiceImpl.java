@@ -3,15 +3,20 @@ package com.suncaper.demo.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.suncaper.demo.common.Constant;
+import com.suncaper.demo.common.JsonResult;
+import com.suncaper.demo.common.SessionUtils;
 import com.suncaper.demo.entity.Batch;
 import com.suncaper.demo.entity.BatchExample;
+import com.suncaper.demo.entity.BatchGrade;
 import com.suncaper.demo.entity.dto.BatchDto;
 import com.suncaper.demo.mapper.BatchMapper;
+import com.suncaper.demo.service.BatchGradeService;
 import com.suncaper.demo.service.BatchService;
 import com.suncaper.demo.service.DictionaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,7 +30,8 @@ public class BatchServiceImpl implements BatchService {
 
     @Autowired
     private DictionaryService dictionaryService;
-
+    @Autowired
+    private BatchGradeService batchGradeService;
     @Override
     public Batch getActiveBatch() {
         BatchExample batchExample = new BatchExample();
@@ -71,10 +77,19 @@ public class BatchServiceImpl implements BatchService {
 //            batchVo.setDifficultyValue(dictionaryService.getNameByValueAndType(Constant.DIFFICULTY_TYPE, s.getDifficultyLevel()));
 //            return batchVo;
 //        }).collect(Collectors.toList());
-
-        batchPageInfo.getList().stream().forEach(s->{
+        //获取当前的批次
+        Batch curBatch = getCurBatch();
+        List<BatchGrade> batchGradeList = batchGradeService.selectGradeByBatchId(curBatch.getId());
+       /* batchPageInfo.getList().stream().forEach(s->{
             s.setDiffcultyValue(dictionaryService.getNameByValueAndType(Constant.DIFFICULTY_TYPE,s.getDifficultyLevel()));
-        });
+        });*/
+        //设置困难等级和年级在里面
+        for (int i = 0; i < batchPageInfo.getList().size(); i++) {
+            batchPageInfo.getList().get(i).setDiffcultyValue(dictionaryService.getNameByValueAndType(Constant.DIFFICULTY_TYPE,batchPageInfo.getList().get(i).getDifficultyLevel()));
+            for (int j = 0; j < batchGradeList.size(); j++) {
+                batchPageInfo.getList().get(i).setGrades(Arrays.asList(batchGradeList.get(j).getGrade()));
+            }
+        }
         return batchPageInfo;
     }
 
@@ -125,5 +140,13 @@ public class BatchServiceImpl implements BatchService {
         batch = batches.get(0);
         batch.setDiffcultyValue(dictionaryService.getNameByValueAndType(Constant.DIFFICULTY_TYPE,batch.getDifficultyLevel()));
         return batch;
+    }
+
+    @Override
+    public JsonResult selectBatchById(Long id) {
+        BatchExample batchExample = new BatchExample();
+        batchExample.createCriteria().andIdEqualTo(id);
+        List<Batch> batches = batchMapper.selectByExample(batchExample);
+        return JsonResult.ok(batches.size()>0?batches.get(0):null);
     }
 }

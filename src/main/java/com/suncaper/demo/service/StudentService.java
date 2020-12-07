@@ -9,4 +9,6 @@ import com.suncaper.demo.entity.User;
  */
 public interface StudentService {
     Student selectByUser(User user);
+
+    String selectGradeByCurSn(String sn);
 }

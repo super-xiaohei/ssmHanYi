@@ -40,14 +40,23 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void insert(ProductDto productDto, List<Image> images) {
         productMapper.MyInsertSelective(productDto);
-        List<String> skuNames = productDto.getSkuName();
+        /*List<String> skuNames = productDto.getSkuName();
         List<Sku> skuList = skuNames.stream().map(x -> {
             Sku sku = new Sku();
             sku.setProductId(productDto.getId());
-            sku.setName(x);
+            sku.setSkuName(x);
             return sku;
         }).collect(Collectors.toList());
+        skuService.ManyInsert(skuList);*/
+        List<Sku> skuList = productDto.getSku();
+       /* System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(skuList.get(0).getSkuName());
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++");*/
+       skuList.stream().forEach(x->{
+           x.setProductId(productDto.getId());
+       });
         skuService.ManyInsert(skuList);
+        /*skuService.ManyInsert(skuList);*/
         //插入图片
         images.stream().forEach(x->{
             x.setProductId(productDto.getId());
@@ -126,7 +135,7 @@ public class ProductServiceImpl implements ProductService {
         List<Sku> skuList = skuNames.stream().map(x -> {
             Sku sku = new Sku();
             sku.setProductId(productDto.getId());
-            sku.setName(x);
+            sku.setSkuName(x);
             return sku;
         }).collect(Collectors.toList());
         skuService.ManyInsert(skuList);

@@ -1,6 +1,7 @@
 package com.suncaper.demo.service.impl;
 
 import com.suncaper.demo.common.Constant;
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.entity.Sku;
 import com.suncaper.demo.entity.SkuExample;
 import com.suncaper.demo.mapper.SkuMapper;
@@ -35,4 +36,19 @@ public class SkuServiceImpl implements SkuService {
     public void deleteByExample(SkuExample skuExample) {
         skuMapper.deleteByExample(skuExample);
     }
+
+    @Override
+    public Sku selectStockAndTotalBySkuId(Long skuId) {
+        SkuExample skuExample = new SkuExample();
+        skuExample.createCriteria().andIdEqualTo(skuId);
+        List<Sku> skuList = skuMapper.selectByExample(skuExample);
+        return skuList.size() > 0?skuList.get(0):null;
+    }
+
+    @Override
+    public void updateSkuStockByExample(Sku sku2) {
+        skuMapper.updateByPrimaryKey(sku2);
+    }
+
+
 }

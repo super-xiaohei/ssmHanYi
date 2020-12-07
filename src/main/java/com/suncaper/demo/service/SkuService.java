@@ -1,5 +1,6 @@
 package com.suncaper.demo.service;
 
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.entity.Sku;
 import com.suncaper.demo.entity.SkuExample;
 import org.apache.ibatis.annotations.Param;
@@ -17,4 +18,10 @@ public interface SkuService {
     List<Sku> listByProductId(Long id);
 
     void deleteByExample(SkuExample skuExample);
+
+    Sku selectStockAndTotalBySkuId(Long skuId);
+
+
+
+    void updateSkuStockByExample(Sku sku2);
 }

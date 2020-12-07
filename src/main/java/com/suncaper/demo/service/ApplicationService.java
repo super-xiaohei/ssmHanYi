@@ -1,5 +1,6 @@
 package com.suncaper.demo.service;
 
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.entity.Application;
 import com.suncaper.demo.entity.AuditHistory;
 import com.suncaper.demo.entity.vo.StatisticsVo;
@@ -22,7 +23,7 @@ public interface ApplicationService {
 
     void audit(AuditHistory auditHistory);
 
-    void updateApp(Application application);
+    boolean updateApp(Application application);
 
     void export(HttpServletResponse response);
 

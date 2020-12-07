@@ -1,6 +1,7 @@
 package com.suncaper.demo.service;
 
 import com.github.pagehelper.PageInfo;
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.entity.Batch;
 import com.suncaper.demo.entity.dto.BatchDto;
 
@@ -30,4 +31,5 @@ public interface BatchService {
 
     Batch getCurBatch();
 
+    JsonResult selectBatchById(Long id);
 }

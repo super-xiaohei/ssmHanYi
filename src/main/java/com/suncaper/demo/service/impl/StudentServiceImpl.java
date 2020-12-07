@@ -26,4 +26,12 @@ public class StudentServiceImpl implements StudentService {
         List<Student> students = studentMapper.selectByExample(studentExample);
         return students.size()>0?students.get(0):null;
     }
+
+    @Override
+    public String selectGradeByCurSn(String sn) {
+        StudentExample studentExample = new StudentExample();
+        studentExample.createCriteria().andSnEqualTo(sn);
+        List<Student> students = studentMapper.selectByExample(studentExample);
+        return students.size() > 0?students.get(0).getGrade():null;
+    }
 }
