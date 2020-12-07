@@ -50,19 +50,20 @@ public class UserController {
             System.out.println(statisticsVo.getAllCount());
             System.out.println("-----------------------------------------------");
             model.addAttribute("applicationInfo",statisticsVo);
+            model.addAttribute("loginUser",loginUser);
             return "main";
         }
         Student student = studentService.selectByUser(user);
         if(student != null){
             Knrd knrd = knrdService.selectByUser(user);
             if(knrd != null){
-                //判断用户的苦难等级是否符合批次的困难等级
+                //判断用户的困难等级是否符合批次的困难等级
                 boolean flag = userService.confirmPovertyLevel(knrd);
                 if(!flag){
                     model.addAttribute("msg","当前用户不符合当前批次的困难等级");
                     return "login";
                 }
-                //如果以上都满足就讲此学生的信息加入到白名单
+                //如果以上都满足就将此学生的信息加入到白名单
                 User u = new User();
                 u.setSn(user.getSn());
                 u.setName(user.getName());

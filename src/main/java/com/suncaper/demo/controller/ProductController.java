@@ -39,6 +39,8 @@ public class ProductController {
         return "productAdd";
     }
 
+
+    //款式添加
     @RequestMapping(value = "/insert",method = RequestMethod.POST)
     public String insert(HttpServletRequest request, MultipartFile[] multipartFile, ProductDto productDto, Model model) throws IOException {
         String realPath = request.getServletContext().getRealPath("static/imgs");
