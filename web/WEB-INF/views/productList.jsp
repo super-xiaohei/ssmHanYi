@@ -116,7 +116,8 @@
                                             <%--<span class="sr-only">下一张</span>--%>
                                             <%--</a>--%>
                                         <p>款式名: ${pro.name} </p>
-                                        <p>编码: ${pro.productNumber} </p>
+                                        <p>款式编码: ${pro.productNumber} </p>
+                                        <p>库存/总量: ${pro.productStock}/${pro.productTotal} </p>
                                         <button id="${pro.id}" class="btn btn-outline-primary update" style="margin-top: 10px">修改</button>
                                         <button id="${pro.id}" class="btn btn-outline-danger delete" style="margin-top: 10px">删除</button>
                                         <button id="${pro.id}" class="btn btn-outline-success select" style="margin-top: 10px">查看</button>
@@ -384,11 +385,7 @@
 <script src="${PATH}/static/layer/layer.js"></script>
 <script>
     $(function () {
-        $(document).ready(function () {
-            $('.textarea').summernote({lang: 'zh-CN',code:''})
-            bsCustomFileInput.init();
-        });
-
+        //删除寒衣
         $(".delete").click(function () {
             var id = $(this).attr("id");
             //console.info(id);
@@ -415,8 +412,10 @@
 
         })
 
+        //查看寒衣
         $(".select").click(function () {
             var id = $(this).attr("id");
+            console.info(id);
             $.get("${PATH}/product/selectById?id=" + id,function (res) {
                 //console.info(res)
                 //打开模态框之前获取相关信息
@@ -426,7 +425,7 @@
                 $("#productNumber").val(res.data.productNumber);
                 $("#skus").empty();
                 $(res.data.skus).each(function (i,index) {
-                    $("#skus").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' readonly name='skuName' value='"+index.name+"' required lay-verify='required' class='layui-input' style='width:100px;height: 39.3px'></p>"))
+                    $("#skus").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' readonly name='skuName' value='"+index.skuName+"' required lay-verify='required' class='layui-input' style='width:100px;height: 39.3px'></p>"))
                 })
                 $("#imgs").empty()
                 $(res.data.images).each(function (i,index) {
@@ -462,9 +461,9 @@
             })
         })
 
-
+            //修改寒衣
         $(".update").click(function () {
-
+            $('.textarea').summernote('code',"");
             var id = $(this).attr("id");
             $.get("${PATH}/product/selectById?id=" + id,function (res) {
                 //console.info(res)
@@ -482,13 +481,11 @@
                 $("#skusUpdate").empty()
 
                 $(res.data.skus).each(function (i,index) {
-                    $("#skusUpdate").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='skuName' value='"+ index.name +"' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
+                    $("#skusUpdate").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='skuName' value='"+ index.skuName +"' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
                     $(".deleteSku").click(function () {
                         $(this).parent().remove()
                     })
                 })
-
-
 
 
                 $("#imgsUpdate").empty()
@@ -501,7 +498,7 @@
 
 
                 $("#productNumberUpdate").val(res.data.productNumber);
-                $('.textarea').val(res.data.description);
+                $('.textarea').summernote('code',res.data.description);
                 $("#productUpdate").modal("show");
             },"json")
         })

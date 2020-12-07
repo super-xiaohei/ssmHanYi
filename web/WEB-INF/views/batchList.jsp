@@ -78,7 +78,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" action="${PATH}/batch/list" id="queryForm">
                                     <input type="hidden" name="pageNum" value="1"/>
                                     <input type="hidden" name="pageSize" value="10"/>
                                 <div class="row">
@@ -154,6 +154,7 @@
 
                             </div>
                             <!-- /.card-header -->
+                           <%-- 分页和数据显示--%>
                             <div class="card-body">
                                 <table id="example2" class="table table-bordered table-hover">
                                     <thead>
@@ -166,6 +167,7 @@
                                         <th>选衣结束时间</th>
                                         <th>困难等级</th>
                                         <th>激活状态</th>
+                                        <th>开放年级</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -179,11 +181,21 @@
                                                 <td><fmt:formatDate value="${batch.registerStartDate}" type="date"/></td>
                                                 <td><fmt:formatDate value="${batch.registerEndDate}" type="date"/></td>
                                                 <td id="difValue">${batch.diffcultyValue}</td>
-                                                <td>${batch.active == 0?"已结束":"已激活"}</td>
+                                                <td id="activeStatus1">${batch.active == 0?"已结束":"已激活"}</td>
                                                 <td>
-                                                    <button class="btn btn-outline-info">修改</button>
-                                                    <button  id="${batch.id}" class="btn btn-outline-primary end">结束批次</button>
-                                                    <button class="btn btn-outline-danger">删除</button>
+                                                    <button id="${batch.id}" class="btn btn-outline-dark selectGrade">查看年级</button>
+                                                </td>
+                                                <td>
+                                                    <c:if test="${batch.active == 1}">
+                                                        <button id="${batch.id}" class="btn btn-outline-info update">修改</button>
+                                                        <button  id="${batch.id}" class="btn btn-outline-primary end">结束批次</button>
+                                                        <button id="${batch.id}" class="btn btn-outline-danger addGrade">添加开放年级</button>
+                                                    </c:if>
+                                                    <c:if test="${batch.active == 0}">
+                                                        <button class="btn btn-outline-info">查看</button>
+                                                        <button  id="${batch.id}" class="btn btn-outline-primary disabled">结束批次</button>
+                                                        <button id="${batch.id}" class="btn btn-outline-danger disabled">添加开放年级</button>
+                                                    </c:if>
                                                 </td>
                                             </tr>
                                         </c:forEach>
@@ -308,9 +320,142 @@
                             </form>
                         </div>
                     </div>
+
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" class="btn btn-primary" id="saveBatch">保存修改</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <%--添加开放年级模态框--%>
+        <div class="modal fade" id="newGrade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title ">添加开放年级</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--添加开放年级的模态框-->
+                    <div class="modal-body">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">添加相关信息</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form id="gradeForm" role="form">
+                                <div class="layui-form-item">
+                                    <label></label>
+                                    <label></label>
+                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <label></label>
+                                    <label >添加开放年级</label>
+                                    <div class="layui-input-block" id="grade">
+                                        <button type="button" id="addBatchGrade" class="layui-btn">
+                                            <i class="layui-icon">&#xe608;</i> 添加年级
+                                        </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="saveGrade">保存</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <%--修改批次的模态框--%>
+        <div class="modal fade" id="updateBatch">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title ">新建批次</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <!--添加批次的模态框-->
+                    <div class="modal-body">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">修改相关信息</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form id="batchUpdateForm" role="form">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label >批次名称</label>
+                                        <input type="text" class="form-control" id="nameUpdate" name="name" placeholder="批次名称 格式:例 1998-1999 学年">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="form-group">
+                                            <label>申请开始时间</label>
+                                            <div class="input-group date" id="reservationdate1Update" data-target-input="nearest">
+                                                <input type="text" name="applicationStartDate" id="applicationStartDateUpdate" class="form-control datetimepicker-input" name="" data-target="#reservationdate1" placeholder="申请开始时间">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >申请结束时间</label>
+                                        <div class="input-group date" id="reservationdate2Update" data-target-input="nearest">
+                                            <input type="text" name="applicationEndDate" id="applicationEndDateUpdate" class="form-control datetimepicker-input" data-target="#reservationdate2" placeholder="申请结束时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >选衣开始时间</label>
+                                        <div class="input-group date" id="reservationdate3Update" data-target-input="nearest">
+                                            <input type="text" name="registerStartDate" id="registerStartDateUpdate" class="form-control datetimepicker-input" data-target="#reservationdate3" placeholder="选衣开始时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >选衣结束时间</label>
+                                        <div class="input-group date" id="reservationdate4Update" data-target-input="nearest">
+                                            <input type="text" name="registerEndDate" id="registerEndDateUpdate" class="form-control datetimepicker-input" data-target="#reservationdate4" placeholder="选衣结束时间">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >困难等级</label>
+                                        <div class="col-sm-6">
+                                            <!-- radio -->
+                                            <div class="form-group clearfix">
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="radioPrimary1Update" value="BKN" name="difficultyLevel" checked="">
+                                                    <label for="radioPrimary1Update">不困难
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="radioPrimary2Update" value="YBKN" name="difficultyLevel">
+                                                    <label for="radioPrimary2Update">一般困难
+                                                    </label>
+                                                </div>
+                                                <div class="icheck-primary d-inline">
+                                                    <input type="radio" id="radioPrimary3Update" value="TSKN" name="difficultyLevel">
+                                                    <label for="radioPrimary3Update">特殊困难
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="saveBatchUpdate">保存修改</button>
                     </div>
                 </div>
                 <!-- /.modal-content -->
@@ -353,7 +498,8 @@
 <!-- Bootstrap4 Duallistbox -->
 <script src="${PATH}/static/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
 <!-- InputMask -->
-<script src="${PATH}/static/adminlte/plugins/moment/moment.min.js"></script><script src="${PATH}/static/adminlte/plugins/moment/locale/zh-cn.js"></script>
+<script src="${PATH}/static/adminlte/plugins/moment/moment.min.js"></script>
+<script src="${PATH}/static/adminlte/plugins/moment/locale/zh-cn.js"></script>
 <script src="${PATH}/static/adminlte/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
 <!-- date-range-picker -->
 <script src="${PATH}/static/adminlte/plugins/daterangepicker/daterangepicker.js"></script>
@@ -436,18 +582,24 @@
 /*---------------------------------------------------自己写----------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------自己写----------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------自己写----------------------------------------------------------------------------------------------------------------------------------*/
+
+
+
+        //创建新的批次
         $("#createBatch").click(function () {
             //显示新建批次的模态框之前先清空表单,jQuery没有清空表单的功能，转化为dom对象（js）对表单进行清空
             $("#batchForm")[0].reset();
             $("#newBatch").modal("show");
         });
 
+        //保存批次
         $("#saveBatch").click(function () {
             $.ajax({
                 type:"get",
                 url:"${PATH}/batch/getActiveBatch",
                 dataType:"json",
                 success:function (batch) {
+                    console.info(batch)
                     if(batch.data != null){
                         layer.msg("存在已经激活的批次,无法再进行添加",{icon:0,time:1500},function () {
 
@@ -455,13 +607,14 @@
                     }else{
                         var name = $("#name").val();
                         $.ajax({
-                            type:"get",
+                            type:"post",
                             url:"${PATH}/batch/save",
                             data:$("#batchForm").serialize(),
                             dataType:"json",
                             success:function (res) {
+                                console.info(res)
                                 if (res.code == 200) {
-                                    layer.msg("添加批次成功", {icon: 6, time: 1500}, function () {
+                                    layer.msg("添加批次成功", {icon: 6,time: 1500}, function () {
                                         $("#newBatch").modal("hide");
                                         //刷新页面
                                         window.location = "${PATH}/batch/list?pageNum=1&pageSize=10";
@@ -473,6 +626,8 @@
                 }
             })
         })
+
+        //layui的日期控制
         layui.use('laydate', function(){
             var laydate = layui.laydate;
 
@@ -491,6 +646,7 @@
             });
 
         });
+
         $("#pageSize").val("${batchPageInfo.pageSize}")
 
         $("#pageSize").change(function () {
@@ -498,43 +654,65 @@
         })
 
         $("#pageNum").val("${batchPageInfo.pageNum}");
+        //跳转到多少页
         $("#jump").click(function () {
             var pageNum = $("#pageNum").val();
             window.location = "${PATH}/batch/list?pageNum=" + pageNum  + "&pageSize=" + ${batchPageInfo.pageSize};
 
         })
 
+        //获取相关信息
         $.ajax({
-            type:"get",
-            url:"${PATH}/dictionary/getDictionary",
-            data:{type:"DIFFICULTY"},
-            dataType:"json",
-            success:function (res) {
-                $("#difLevel").append($("<option value=''>" + "所有" + "</option>"));
-                $(res.data).each(function (i,index) {
-                    //console.info(index.itemName);
-                    $("#difLevel").append($("<option value='" + index.itemValue + "'>"+ index.itemName + "</option>"))
-                })
-            }
-        })
+                type:"get",
+                url:"${PATH}/dictionary/getDictionary",
+                data:{type:"DIFFICULTY"},
+                dataType:"json",
+                success:function (res) {
+                    $("#difLevel").append($("<option value=''>" + "所有" + "</option>"));
+                    $(res.data).each(function (i,index) {
+                        if(difData==index.itemValue){
+                            $("#difLevel").append($("<option value='" + index.itemValue + "' selected>"+ index.itemName + "</option>"))
+                        }else {
+                            $("#difLevel").append($("<option value='" + index.itemValue + "'>"+ index.itemName + "</option>"))
+                        }
+                        //console.info(index.itemName);
+
+                    })
+                }
+            })
 
 
-        $("#query").click(function () {
-
-        })
-
-
-
-
-
+        //重置输入框和下拉框
         $("#reset").click(function () {
             $("#batchName").val("");
             $("#difLevel").val("");
             $("#activeStatus").val("");
         })
 
+        //修改批次(未完成)
+        $(".update").click(function () {
+            //打开修改批次模态框之前填入相关数据
+            var batchId = $(this).attr("id");
+            //console.info(batchId);
+            $.ajax({
+                type:"get",
+                url:"${PATH}/batch/selectBatchById?id=" + batchId,
+                dataType:"json",
+                success:function (res) {
+                    //console,info(res);
+                    $("#nameUpdate").val(res.data.name)
+                    $("#applicationStartDateUpdate").val(res.data.applicationStartDate)
+                    $("#applicationEndDateUpdate").val(res.data.applicationEndDate)
+                    $("#registerStartDateUpdate").val(res.data.registerStartDate)
+                    $("#registerEndDateUpdate").val(res.data.registerEndDate)
+                }
+            })
+            $("#updateBatch").modal("show");
+        })
 
-        
+
+
+        //结束批次
         $(".end").click(function () {
             var id = $(this).attr("id");
             console.info(id);
@@ -555,12 +733,14 @@
             return false;
         })
 
+
+        //选中所有
         $("#checkAll").click(function () {
             var flag = $(this).prop("checked");
             $(".myCheck").prop("checked",flag);
         })
 
-        //判断选中的个数是否和总的个数一致，一致的话全选按钮就下选上，否则不选
+        //判断选中的个数是否和总的个数一致，一致的话全选按钮就全部选上，否则不选
         $("input[name='checks']").click(function () {
             var length = $("input[name='checks']").length;
             console.info(length)
@@ -577,9 +757,7 @@
             }
         })
 
-
-
-
+        //删除选中
        $("#deletes").click(function () {
             var idList = [];
            $(".myCheck").each(function (i, index) {
@@ -611,6 +789,42 @@
            },function (index) {
                layer.close(index)
            });
+
+        })
+
+        //添加开放年级
+        $(".addGrade").click(function (res) {
+            //console.info($(this).attr("id"))
+            var batchId = $(this).attr("id");
+            $("#gradeForm")[0].reset();
+            $("#newGrade").modal("show");
+        })
+        //点击按钮添加年级的输入框
+        $("#addBatchGrade").click(function () {
+            $("#grade").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' id='grade' name='grades' required lay-verify='required' placeholder='请输入年级' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteGrade layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
+            $(".deleteGrade").click(function () {
+                $(this).parent().remove()
+            })
+        })
+        //添加年级
+       $("#saveGrade").click(function () {
+           $.ajax({
+               type:"get",
+               url:"${PATH}/batch/addGrade",
+               data:$("#gradeForm").serialize(),
+               dataType:"json",
+               success:function (res) {
+                   if(res.data){
+                       layer.msg("添加年级成功",{icon:1,time:1500},function (res) {
+                           $("#newGrade").modal("hide");
+                           window.location = "${PATH}/batch/list?pageNum=1&pageSize=10";
+                       })
+                   }
+               }
+           })
+       })
+        //查看年级
+        $(".selectGrade").click(function () {
 
         })
     })

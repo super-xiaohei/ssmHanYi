@@ -114,7 +114,8 @@
                                             <%--<span class="sr-only">下一张</span>--%>
                                             <%--</a>--%>
                                         <p>款式名: ${pro.name} </p>
-                                        <p>编码: ${pro.productNumber} </p>
+                                        <p>款式编码: ${pro.productNumber} </p>
+                                        <p>库存/总量: ${pro.productStock}/${pro.productTotal} </p>
                                         <button id="${pro.id}" class="btn btn-outline-success select" style="margin-top: 10px">查看</button>
                                     </div>
                                 </div>
@@ -123,7 +124,7 @@
                         </div>
                     </c:forEach>
                 </div>
-                <%--查看商品款式信息的模态框--%>
+                <%--查看+选衣商品款式信息的模态框--%>
                 <div class="modal fade" id="productMsg">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -178,9 +179,24 @@
                                                 </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--%>
                                                     <select lay-ignore id="skus">
                                                     </select>
+                                                    <c:forEach items="${productList}" var="pro" end="0">
+                                                        <button type="button" id="${pro.id}" class="show">显示库存和总量</button>
+                                                    </c:forEach>
+
                                             </div>
                                         </div>
-
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">库存</label>
+                                            <div class="layui-input-block">
+                                                <input id="skuStock" readonly/>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">总量</label>
+                                            <div class="layui-input-block">
+                                                <input id="skuTotal" readonly/>
+                                            </div>
+                                        </div>
                                         <div class="layui-form-item">
                                             <label class="layui-form-label">图片</label>
                                             <div class="layui-input-block">
@@ -221,101 +237,7 @@
                     <!-- /.modal-dialog -->
                 </div>
                 <%--修改商品款式信息的模态框--%>
-                <div class="modal fade" id="productUpdate">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title ">新建批次</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <!--修改款式信息的模态框-->
-                            <div class="modal-body">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">输入相关信息</h3>
-                                    </div>
-                                    <!-- /.card-header -->
-                                    <!-- form start -->
-                                    <form id="updateForm" class="layui-form" enctype="multipart/form-data" action="${PATH}/product/update" method="post">
-                                        <input type="hidden" name="id" id="proId2"/>
-                                        <input type="hidden" name="pageNum" value="1"/>
-                                        <input type="hidden" name="pageSize" value="10"/>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">批次</label>
-                                            <div class="layui-input-block">
-                                                <select class="layui-input layui-unselect" id="batch" name="batchId" >
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">款式</label>
-                                            <div class="layui-input-block">
-                                                <input type="text" id="nameUpdate" name="name"  required lay-verify="required" placeholder="款式" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">性别</label>
-                                            <div class="layui-input-block">
-                                                <input type="radio" value="M" name="gender" title="男款">
-                                                <input type="radio" value="F" name="gender" title="女款">
-                                                <input type="radio" value="MF" name="gender" title="男女皆宜">
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">编码</label>
-                                            <div class="layui-input-block">
-                                                <input type="text" id="productNumberUpdate"  name="productNumber" required lay-verify="required" placeholder="编码" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">规格</label>
-                                            <button type="button" id="addSkuUpdate" class="layui-btn">
-                                                <i class="layui-icon">&#xe608;</i> 添加
-                                            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div class="layui-input-block" id="skusUpdate">
 
-                                               <div class="layui-input-block">
-
-                                               </div>
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">图片</label>
-                                            <div class="layui-input-block">
-                                                <div class="layui-upload">
-                                                    <button type="button" class="layui-btn" id="addImgUpdate">图片上传</button>
-                                                    <%--<textarea name="description" class="textarea" placeholder="在此处添加商品描述" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
-                                                --%>预览图：<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;" id="imgsUpdate">
-                                                    <div class="layui-upload-list" id="imgUpdate" name='multipartFile'></div>
-                                                </blockquote>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="layui-form-item layui-form-text">
-                                            <label class="layui-form-label">描述</label>
-                                            <div class="layui-input-block" id="descriptionUpdate">
-                                                <%--<textarea name="description" placeholder="在此处添加商品描述" class="layui-textarea"></textarea>--%>
-                                                <textarea name="description" class="textarea"  style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
-                                            </div>
-                                        </div>
-
-                                         <div class="layui-form-item">
-                                             <div class="layui-input-block">
-                                                 <button class="layui-btn" type="submit" id="commit">立即提交</button>
-                                             </div>
-                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
                 <!-- /.row -->
             </div><!-- /.container-fluid -->
         </section>
@@ -390,9 +312,12 @@
             bsCustomFileInput.init();
         });
 
-
+        //点击查看寒衣
         $(".select").click(function () {
+            $("#skuStock").val("");
+            $("#skuTotal").val("");
             var id = $(this).attr("id");
+            //console.info($(".show").attr("id"));
             $.get("${PATH}/product/selectById?id=" + id,function (res) {
                 //console.info(res)
                 //打开模态框之前获取相关信息
@@ -404,7 +329,7 @@
                 $("#skus").empty();
                 $("#skus").append($("<option value=''>"+""+"</option>"))
                 $(res.data.skus).each(function (i,index) {
-                    $("#skus").append($("<option class='skuA' value='"+index.id+"' name='sku'>"+index.name+"</option>"))
+                    $("#skus").append($("<option class='skuA' value='"+index.id+"' name='sku'>"+index.skuName+"</option>"))
                 })
                 $("#imgs").empty()
                 $(res.data.images).each(function (i,index) {
@@ -415,6 +340,31 @@
             },"json")
         })
 
+        //显示相关款式的规格的库存和数量
+        $(".show").click(function (res) {
+            var pro_Id = $(this).attr("id");
+            //console.info(pro_Id);
+            $(".skuA").each(function (i, index) {
+                if($(index).prop("selected")){
+                    skuId = $(index).val();
+                    //console.info(skuId)
+                    $.ajax({
+                        type:"get",
+                        url:"${PATH}/sku/selectStockAndTotalBySkuId?skuId=" + skuId,
+                        dataType:"json",
+                        success:function (res) {
+                            if(res.data){
+                                console.info(res)
+                                $("#skuStock").val(res.data.skuStock);
+                                $("#skuTotal").val(res.data.skuTotal);
+                            }
+                        }
+                    })
+                }
+            })
+
+        })
+        //查询所有的批次
         $.ajax({
             type: "get",
             url: "${PATH}/batch/listByAjax",
@@ -426,28 +376,31 @@
                /* $("#batch").val(res.data.batchId)*/
             }
         })
-
+        //规格的修改（在这不允许修改了）
         $("#addSkuUpdate").click(function () {
             $("#skusUpdate").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='skuName' required lay-verify='required' placeholder='请输入规格' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
             $(".deleteSku").click(function () {
                 $(this).parent().remove()
             })
         })
+        //图片的修改（在这不允许修改了）
         $("#addImgUpdate").click(function () {
             $("#imgsUpdate").append($("<p><input type='file' name='multipartFile' class='form-control' style='width: 200px'/><button type='button' class='deleteImg btn btn-outline-dark'>删除</button></p>"))
             $(".deleteImg").click(function () {
                 $(this).parent().remove()
             })
         })
-
+        //学生选衣
         $("#choosePro").click(function () {
+            //获取款式id
             var proId2 = $("#proId").val();
-            console.info(proId2);
+            //console.info(proId2);
             var skuId = "";
+            //循环获取规格id
             $(".skuA").each(function (i, index) {
                if($(index).prop("selected")){
                    skuId = $(index).val();
-                   console.info(skuId)
+                   //console.info(skuId)
                }
             })
             if(skuId === ""){
@@ -456,12 +409,21 @@
                 })
                 return false;
             }
+            //控制台打印输出库存数量
+            //console.info( $("#skuStock").val())
+             if( $("#skuStock").val() == 0){
+                layer.msg("该款式的此规格的库存已经没有了,不能选衣!",{icon:3,time:1500},function () {
+                    return false;
+                })
+                return false;
+            }
             $.ajax({
                 type:"post",
-                url:"${PATH}/application/updateApp",
+                url:"${PATH}/application/updateApp?id=" + skuId +"&productId=" + proId2,
                 data:{skuId:skuId,productId:proId2},
                 dataType:"json",
                 success:function (res) {
+                    //console.info(res.data);
                     if(res.data){
                         layer.msg("选衣成功哦!",{icon:6,time:1500},function () {
                             $("#productMsg").modal("hide");

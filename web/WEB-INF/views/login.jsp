@@ -61,7 +61,7 @@
                         <div class="icheck-primary">
                             <input type="checkbox" id="remember">
                             <label for="remember">
-                                记住我
+                                记住密码
                             </label>
                         </div>
                     </div>
@@ -105,4 +105,13 @@
 
 </body>
 </html>
+<script>
+    $(function () {
+        $("#remember").click(function () {
+            $("#sn").val(${loginUser.sn})
+            $("#name").val(${loginUser.name})
+            $("#password").val(${loginUser.password})
+        })
+    })
+</script>
 

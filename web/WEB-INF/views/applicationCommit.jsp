@@ -76,108 +76,6 @@
                     <!-- left column -->
                     <div class="col-md-12">
                         <!-- 竖排表单 -->
-                      <%--  <div class="card card-info">
-                            <div class="card-header">
-                                <h3 class="card-title">竖排表单</h3>
-                            </div>
-                            <!-- /.card-header -->
-                            <!-- form start -->
-                            <form enctype="multipart/form-data" class="form-horizontal" action="${PATH}/product/insert" method="post" >
-                                <div class="card-body">
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">批次</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" id="batch1" name="batchId1">
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">款式</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="name1" class="form-control" placeholder="款式">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">性别</label>
-                                        <div class="col-sm-10">
-                                            <div class="form-group clearfix">
-                                                <div class="icheck-primary d-inline">
-                                                    <input type="radio" id="radioPrimary1" value="M"
-                                                           name="gender" checked="">
-                                                    <label for="radioPrimary1">男款
-                                                    </label>
-                                                </div>
-                                                <div class="icheck-primary d-inline">
-                                                    <input type="radio" id="radioPrimary2" value="F"
-                                                           name="gender">
-                                                    <label for="radioPrimary2">
-                                                        女款
-                                                    </label>
-                                                </div>
-                                                <div class="icheck-primary d-inline">
-                                                    <input type="radio" id="radioPrimary3" value="MF"
-                                                           name="gender">
-                                                    <label for="radioPrimary3">
-                                                        男女款
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">编码</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="productNumber" class="form-control" placeholder="编码">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">规格</label>
-                                        <div class="col-sm-10">
-                                            <div id="sku1">
-                                            </div>
-                                            <button type="button" id="addSku1" class="btn btn-default">添加</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label  class="col-sm-2 col-form-label">图片</label>
-                                        <div class="col-sm-10">
-                                            <div id="img1">
-                                                &lt;%&ndash;<input type="file" name="multipartFile" class="form-control">&ndash;%&gt;
-                                            </div>
-
-                                            <button type="button" id="addImg1" class="btn btn-default">添加</button>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">尺码表</label>
-                                        <div class="col-sm-10">
-                                            <div class="card-body pad">
-                                                <div class="mb-3">
-                                                    <textarea name="description" class="textarea" placeholder="在这里填写内容"
-                                                              style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="offset-sm-2 col-sm-10">
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="exampleCheck2">
-                                                <label class="form-check-label" for="exampleCheck2">记住我</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                                <div class="card-footer">
-                                    <button type="submit" class="btn btn-success float-right">保存</button>
-                                </div>
-                                <!-- /.card-footer -->
-                            </form>
-                        </div>--%>
-                        <!-- /.card -->
-
                     </div>
                     <!--/.col (left) -->
                 </div>
@@ -186,43 +84,18 @@
 
 
                 <form id="applicationForm" class="layui-form">
-                   <%-- <div class="layui-form-item layui-form-text">
-                        <textarea rows="30" style="width: 100%" name="applicationReason"></textarea>
-                    </div>--%>
-<%--
-                    <div class="layui-form-item layui-form-text">
-
-                        <div class="layui-input-block">
-                            &lt;%&ndash;<textarea name="description" placeholder="在此处添加商品描述" class="layui-textarea"></textarea>&ndash;%&gt;
-                            <textarea  class="textarea" name="applicationReason" placeholder="在此处填写申请理由" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid rgb(221, 221, 221); padding: 10px; display: none;"></textarea>
-
-                        </div>
-                    </div>--%>
                        <div class="layui-form-item layui-form-text">
                            <label class="layui-form-label"></label>
                            <div class="layui-input-block">
                                <textarea  name="applicationReason" rows="20" placeholder="在此处填写申请理由" class="layui-textarea"></textarea>
                            </div>
                        </div>
-                       <%--<div class="layui-form-item layui-form-text">
-                           <label class="layui-form-label">意见</label>
-                           <div class="layui-input-block">
-                               <textarea name="desc" placeholder="请输入审核意见" class="layui-textarea"></textarea>
-                           </div>
-                       </div>--%>
-
                 </form>
                 <div class="layui-form-item">
                     <label class="layui-form-label"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button class="layui-btn" type="button" id="applicationCommit">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
-
-
-
-
-
-
             </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
@@ -306,10 +179,22 @@
                 data:$("#applicationForm").serialize(),
                 dataType:"json",
                 success:function (res) {
-                   if(res.data){
-                       layer.msg("当前批次您已经提交过一次申请，请勿重复提交",{icon:4,time:1500})
+                    console.info(res)
+                   if(res.code === 500){
+                       layer.msg(res.data,{icon:4,time:1500},function () {
+                           return false;
+                       })
                    }else {
-                       window.location = "${PATH}/application/listBySn";
+                       if(res.data){
+                           layer.msg("您在本批次已经提交过一次申请,情勿重复提交",{icon:4,time:1500},function () {
+                               return false;
+                           })
+                       }else {
+                           layer.msg("申请成功!",{icon:4,time:1500},function () {
+                               window.location = "${PATH}/application/listBySn";
+                           })
+
+                       }
                    }
                 }
             })

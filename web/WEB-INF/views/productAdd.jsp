@@ -166,20 +166,20 @@
                     <input type="hidden" name="pageNum" value="1"/>
                     <input type="hidden" name="pageSize" value="10"/>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">批次</label>
+                        <label class="layui-form-label">款式批次</label>
                         <div class="layui-input-block">
                             <select class="layui-input layui-unselect" id="batch" name="batchId" >
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">款式</label>
+                        <label class="layui-form-label">款式名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="name" required lay-verify="required" placeholder="款式" autocomplete="off" class="layui-input">
+                            <input type="text" name="name" required lay-verify="required" placeholder="款式名称" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">性别</label>
+                        <label class="layui-form-label">款式性别</label>
                         <div class="layui-input-block">
                             <input type="radio" value="M" name="gender" title="男款">
                             <input type="radio" value="f" name="gender" title="女款" checked>
@@ -187,15 +187,15 @@
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">编码</label>
+                        <label class="layui-form-label">款式编码</label>
                         <div class="layui-input-block">
-                            <input type="text" name="productNumber" required lay-verify="required" placeholder="编码" autocomplete="off" class="layui-input">
+                            <input type="text" name="productNumber" required lay-verify="required" placeholder="款式编码" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">规格</label>
                         <div class="layui-input-block" id="sku">
-                            <button type="button" id="addSku" class="layui-btn">
+                            <button type="button" id="addSkuName" class="layui-btn">
                                 <i class="layui-icon">&#xe608;</i> 添加
                             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
@@ -294,9 +294,11 @@
             }
         })
 
+        var i = 0;
+        $("#addSkuName").click(function () {
 
-        $("#addSku").click(function () {
-            $("#sku").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='skuName' required lay-verify='required' placeholder='请输入规格' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i></p>"))
+            $("#sku").append($("<p class='custom-control-inline lay-allowClose='true'><input type='text' name='sku["+i+"].skuName' required lay-verify='required' placeholder='请输入规格' class='layui-input' style='width:100px;height: 39.3px'><i class='deleteSku layui-icon layui-unselect layui-tab-close'>ဆ</i><input type='text' name='sku["+i+"].skuStock' placeholder='款式库存' style='width:100px;height: 39.3px' class='layui-input'/>&nbsp;&nbsp;<input type='text' name='sku["+i+"].skuTotal' placeholder='款式总量' style='width:100px;height: 39.3px' class='layui-input'/></p>"))
+            i++;
             $(".deleteSku").click(function () {
                 $(this).parent().remove()
             })
@@ -328,27 +330,6 @@
             });
         });
 
-        /*//多图片上传
-        layui.use('upload', function(){
-            var s = layui.jquery
-                ,upload = layui.upload;
-            //拖拽上传
-            //多图片上传
-            upload.render({
-                elem: '#addImg'
-                ,url: '${pageContext.request.contextPath}/product/insert' //改成您自己的上传接口
-                ,multiple: true
-                ,before: function(obj){
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function(index, file, result){
-                        $('#img').append('<img name="multipartFile" src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
-                    });
-                }
-                ,done: function(res){
-                    layer.msg("上传完毕")
-                }
-            });
 
-        });*/
     })
 </script>
