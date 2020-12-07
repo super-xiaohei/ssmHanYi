@@ -225,73 +225,73 @@ public class SkuExample {
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNull() {
-            addCriterion("NAME is null");
+        public Criteria andSkuNameIsNull() {
+            addCriterion("sku_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNotNull() {
-            addCriterion("NAME is not null");
+        public Criteria andSkuNameIsNotNull() {
+            addCriterion("sku_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(String value) {
-            addCriterion("NAME =", value, "name");
+        public Criteria andSkuNameEqualTo(String value) {
+            addCriterion("sku_name =", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(String value) {
-            addCriterion("NAME <>", value, "name");
+        public Criteria andSkuNameNotEqualTo(String value) {
+            addCriterion("sku_name <>", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(String value) {
-            addCriterion("NAME >", value, "name");
+        public Criteria andSkuNameGreaterThan(String value) {
+            addCriterion("sku_name >", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("NAME >=", value, "name");
+        public Criteria andSkuNameGreaterThanOrEqualTo(String value) {
+            addCriterion("sku_name >=", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(String value) {
-            addCriterion("NAME <", value, "name");
+        public Criteria andSkuNameLessThan(String value) {
+            addCriterion("sku_name <", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("NAME <=", value, "name");
+        public Criteria andSkuNameLessThanOrEqualTo(String value) {
+            addCriterion("sku_name <=", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameLike(String value) {
-            addCriterion("NAME like", value, "name");
+        public Criteria andSkuNameLike(String value) {
+            addCriterion("sku_name like", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLike(String value) {
-            addCriterion("NAME not like", value, "name");
+        public Criteria andSkuNameNotLike(String value) {
+            addCriterion("sku_name not like", value, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameIn(List<String> values) {
-            addCriterion("NAME in", values, "name");
+        public Criteria andSkuNameIn(List<String> values) {
+            addCriterion("sku_name in", values, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotIn(List<String> values) {
-            addCriterion("NAME not in", values, "name");
+        public Criteria andSkuNameNotIn(List<String> values) {
+            addCriterion("sku_name not in", values, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("NAME between", value1, value2, "name");
+        public Criteria andSkuNameBetween(String value1, String value2) {
+            addCriterion("sku_name between", value1, value2, "skuName");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("NAME not between", value1, value2, "name");
+        public Criteria andSkuNameNotBetween(String value1, String value2) {
+            addCriterion("sku_name not between", value1, value2, "skuName");
             return (Criteria) this;
         }
 
@@ -472,6 +472,126 @@ public class SkuExample {
 
         public Criteria andGmtModifiedNotBetween(Date value1, Date value2) {
             addCriterion("gmt_modified not between", value1, value2, "gmtModified");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockIsNull() {
+            addCriterion("sku_stock is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockIsNotNull() {
+            addCriterion("sku_stock is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockEqualTo(Long value) {
+            addCriterion("sku_stock =", value, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockNotEqualTo(Long value) {
+            addCriterion("sku_stock <>", value, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockGreaterThan(Long value) {
+            addCriterion("sku_stock >", value, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockGreaterThanOrEqualTo(Long value) {
+            addCriterion("sku_stock >=", value, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockLessThan(Long value) {
+            addCriterion("sku_stock <", value, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockLessThanOrEqualTo(Long value) {
+            addCriterion("sku_stock <=", value, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockIn(List<Long> values) {
+            addCriterion("sku_stock in", values, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockNotIn(List<Long> values) {
+            addCriterion("sku_stock not in", values, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockBetween(Long value1, Long value2) {
+            addCriterion("sku_stock between", value1, value2, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuStockNotBetween(Long value1, Long value2) {
+            addCriterion("sku_stock not between", value1, value2, "skuStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalIsNull() {
+            addCriterion("sku_total is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalIsNotNull() {
+            addCriterion("sku_total is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalEqualTo(Long value) {
+            addCriterion("sku_total =", value, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalNotEqualTo(Long value) {
+            addCriterion("sku_total <>", value, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalGreaterThan(Long value) {
+            addCriterion("sku_total >", value, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalGreaterThanOrEqualTo(Long value) {
+            addCriterion("sku_total >=", value, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalLessThan(Long value) {
+            addCriterion("sku_total <", value, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalLessThanOrEqualTo(Long value) {
+            addCriterion("sku_total <=", value, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalIn(List<Long> values) {
+            addCriterion("sku_total in", values, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalNotIn(List<Long> values) {
+            addCriterion("sku_total not in", values, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalBetween(Long value1, Long value2) {
+            addCriterion("sku_total between", value1, value2, "skuTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andSkuTotalNotBetween(Long value1, Long value2) {
+            addCriterion("sku_total not between", value1, value2, "skuTotal");
             return (Criteria) this;
         }
     }

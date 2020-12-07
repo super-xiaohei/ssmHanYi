@@ -305,6 +305,126 @@ public class ProductExample {
             return (Criteria) this;
         }
 
+        public Criteria andProductStockIsNull() {
+            addCriterion("product_stock is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockIsNotNull() {
+            addCriterion("product_stock is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockEqualTo(Long value) {
+            addCriterion("product_stock =", value, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockNotEqualTo(Long value) {
+            addCriterion("product_stock <>", value, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockGreaterThan(Long value) {
+            addCriterion("product_stock >", value, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockGreaterThanOrEqualTo(Long value) {
+            addCriterion("product_stock >=", value, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockLessThan(Long value) {
+            addCriterion("product_stock <", value, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockLessThanOrEqualTo(Long value) {
+            addCriterion("product_stock <=", value, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockIn(List<Long> values) {
+            addCriterion("product_stock in", values, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockNotIn(List<Long> values) {
+            addCriterion("product_stock not in", values, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockBetween(Long value1, Long value2) {
+            addCriterion("product_stock between", value1, value2, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductStockNotBetween(Long value1, Long value2) {
+            addCriterion("product_stock not between", value1, value2, "productStock");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalIsNull() {
+            addCriterion("product_total is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalIsNotNull() {
+            addCriterion("product_total is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalEqualTo(Long value) {
+            addCriterion("product_total =", value, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalNotEqualTo(Long value) {
+            addCriterion("product_total <>", value, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalGreaterThan(Long value) {
+            addCriterion("product_total >", value, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalGreaterThanOrEqualTo(Long value) {
+            addCriterion("product_total >=", value, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalLessThan(Long value) {
+            addCriterion("product_total <", value, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalLessThanOrEqualTo(Long value) {
+            addCriterion("product_total <=", value, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalIn(List<Long> values) {
+            addCriterion("product_total in", values, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalNotIn(List<Long> values) {
+            addCriterion("product_total not in", values, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalBetween(Long value1, Long value2) {
+            addCriterion("product_total between", value1, value2, "productTotal");
+            return (Criteria) this;
+        }
+
+        public Criteria andProductTotalNotBetween(Long value1, Long value2) {
+            addCriterion("product_total not between", value1, value2, "productTotal");
+            return (Criteria) this;
+        }
+
         public Criteria andBatchIdIsNull() {
             addCriterion("batch_id is null");
             return (Criteria) this;
