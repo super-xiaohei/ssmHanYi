@@ -5,6 +5,8 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="NAME" jdbcType="VARCHAR" property="name" />
     <result column="product_number" jdbcType="VARCHAR" property="productNumber" />
+    <result column="product_stock" jdbcType="BIGINT" property="productStock" />
+    <result column="product_total" jdbcType="BIGINT" property="productTotal" />
     <result column="batch_id" jdbcType="BIGINT" property="batchId" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
@@ -73,7 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, NAME, product_number, batch_id, gender, is_deleted, gmt_created, gmt_modified
+    id, NAME, product_number, product_stock, product_total, batch_id, gender, is_deleted, 
+    gmt_created, gmt_modified
   </sql>
   <sql id="Blob_Column_List">
     description
@@ -128,13 +131,13 @@
   </delete>
   <insert id="insert" parameterType="com.suncaper.demo.entity.Product">
     insert into wcss_product (id, NAME, product_number, 
-      batch_id, gender, is_deleted, 
-      gmt_created, gmt_modified, description
-      )
+      product_stock, product_total, batch_id, 
+      gender, is_deleted, gmt_created, 
+      gmt_modified, description)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{productNumber,jdbcType=VARCHAR}, 
-      #{batchId,jdbcType=BIGINT}, #{gender,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, 
-      #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR}
-      )
+      #{productStock,jdbcType=BIGINT}, #{productTotal,jdbcType=BIGINT}, #{batchId,jdbcType=BIGINT}, 
+      #{gender,jdbcType=VARCHAR}, #{isDeleted,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{description,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.suncaper.demo.entity.Product">
     insert into wcss_product
@@ -147,6 +150,12 @@
       </if>
       <if test="productNumber != null">
         product_number,
+      </if>
+      <if test="productStock != null">
+        product_stock,
+      </if>
+      <if test="productTotal != null">
+        product_total,
       </if>
       <if test="batchId != null">
         batch_id,
@@ -176,6 +185,12 @@
       </if>
       <if test="productNumber != null">
         #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productStock != null">
+        #{productStock,jdbcType=BIGINT},
+      </if>
+      <if test="productTotal != null">
+        #{productTotal,jdbcType=BIGINT},
       </if>
       <if test="batchId != null">
         #{batchId,jdbcType=BIGINT},
@@ -215,6 +230,12 @@
       <if test="record.productNumber != null">
         product_number = #{record.productNumber,jdbcType=VARCHAR},
       </if>
+      <if test="record.productStock != null">
+        product_stock = #{record.productStock,jdbcType=BIGINT},
+      </if>
+      <if test="record.productTotal != null">
+        product_total = #{record.productTotal,jdbcType=BIGINT},
+      </if>
       <if test="record.batchId != null">
         batch_id = #{record.batchId,jdbcType=BIGINT},
       </if>
@@ -243,6 +264,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       NAME = #{record.name,jdbcType=VARCHAR},
       product_number = #{record.productNumber,jdbcType=VARCHAR},
+      product_stock = #{record.productStock,jdbcType=BIGINT},
+      product_total = #{record.productTotal,jdbcType=BIGINT},
       batch_id = #{record.batchId,jdbcType=BIGINT},
       gender = #{record.gender,jdbcType=VARCHAR},
       is_deleted = #{record.isDeleted,jdbcType=INTEGER},
@@ -258,6 +281,8 @@
     set id = #{record.id,jdbcType=BIGINT},
       NAME = #{record.name,jdbcType=VARCHAR},
       product_number = #{record.productNumber,jdbcType=VARCHAR},
+      product_stock = #{record.productStock,jdbcType=BIGINT},
+      product_total = #{record.productTotal,jdbcType=BIGINT},
       batch_id = #{record.batchId,jdbcType=BIGINT},
       gender = #{record.gender,jdbcType=VARCHAR},
       is_deleted = #{record.isDeleted,jdbcType=INTEGER},
@@ -275,6 +300,12 @@
       </if>
       <if test="productNumber != null">
         product_number = #{productNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="productStock != null">
+        product_stock = #{productStock,jdbcType=BIGINT},
+      </if>
+      <if test="productTotal != null">
+        product_total = #{productTotal,jdbcType=BIGINT},
       </if>
       <if test="batchId != null">
         batch_id = #{batchId,jdbcType=BIGINT},
@@ -301,6 +332,8 @@
     update wcss_product
     set NAME = #{name,jdbcType=VARCHAR},
       product_number = #{productNumber,jdbcType=VARCHAR},
+      product_stock = #{productStock,jdbcType=BIGINT},
+      product_total = #{productTotal,jdbcType=BIGINT},
       batch_id = #{batchId,jdbcType=BIGINT},
       gender = #{gender,jdbcType=VARCHAR},
       is_deleted = #{isDeleted,jdbcType=INTEGER},
@@ -313,6 +346,8 @@
     update wcss_product
     set NAME = #{name,jdbcType=VARCHAR},
       product_number = #{productNumber,jdbcType=VARCHAR},
+      product_stock = #{productStock,jdbcType=BIGINT},
+      product_total = #{productTotal,jdbcType=BIGINT},
       batch_id = #{batchId,jdbcType=BIGINT},
       gender = #{gender,jdbcType=VARCHAR},
       is_deleted = #{isDeleted,jdbcType=INTEGER},

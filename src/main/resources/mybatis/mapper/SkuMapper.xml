@@ -4,10 +4,12 @@
   <resultMap id="BaseResultMap" type="com.suncaper.demo.entity.Sku">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
-    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="sku_name" jdbcType="VARCHAR" property="skuName" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
     <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="sku_stock" jdbcType="BIGINT" property="skuStock" />
+    <result column="sku_total" jdbcType="BIGINT" property="skuTotal" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, product_id, NAME, is_deleted, gmt_created, gmt_modified
+    id, product_id, sku_name, is_deleted, gmt_created, gmt_modified, sku_stock, sku_total
   </sql>
   <select id="selectByExample" parameterType="com.suncaper.demo.entity.SkuExample" resultMap="BaseResultMap">
     select
@@ -101,12 +103,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.suncaper.demo.entity.Sku">
-    insert into wcss_sku (id, product_id, NAME, 
-      is_deleted, gmt_created, gmt_modified
-      )
-    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{isDeleted,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
-      )
+    insert into wcss_sku (id, product_id, sku_name, 
+      is_deleted, gmt_created, gmt_modified, 
+      sku_stock, sku_total)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT}, #{skuName,jdbcType=VARCHAR}, 
+      #{isDeleted,jdbcType=INTEGER}, #{gmtCreated,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{skuStock,jdbcType=BIGINT}, #{skuTotal,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.suncaper.demo.entity.Sku">
     insert into wcss_sku
@@ -117,8 +119,8 @@
       <if test="productId != null">
         product_id,
       </if>
-      <if test="name != null">
-        NAME,
+      <if test="skuName != null">
+        sku_name,
       </if>
       <if test="isDeleted != null">
         is_deleted,
@@ -129,6 +131,12 @@
       <if test="gmtModified != null">
         gmt_modified,
       </if>
+      <if test="skuStock != null">
+        sku_stock,
+      </if>
+      <if test="skuTotal != null">
+        sku_total,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -137,8 +145,8 @@
       <if test="productId != null">
         #{productId,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
+      <if test="skuName != null">
+        #{skuName,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
         #{isDeleted,jdbcType=INTEGER},
@@ -148,6 +156,12 @@
       </if>
       <if test="gmtModified != null">
         #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skuStock != null">
+        #{skuStock,jdbcType=BIGINT},
+      </if>
+      <if test="skuTotal != null">
+        #{skuTotal,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -166,8 +180,8 @@
       <if test="record.productId != null">
         product_id = #{record.productId,jdbcType=BIGINT},
       </if>
-      <if test="record.name != null">
-        NAME = #{record.name,jdbcType=VARCHAR},
+      <if test="record.skuName != null">
+        sku_name = #{record.skuName,jdbcType=VARCHAR},
       </if>
       <if test="record.isDeleted != null">
         is_deleted = #{record.isDeleted,jdbcType=INTEGER},
@@ -178,6 +192,12 @@
       <if test="record.gmtModified != null">
         gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.skuStock != null">
+        sku_stock = #{record.skuStock,jdbcType=BIGINT},
+      </if>
+      <if test="record.skuTotal != null">
+        sku_total = #{record.skuTotal,jdbcType=BIGINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,10 +207,12 @@
     update wcss_sku
     set id = #{record.id,jdbcType=BIGINT},
       product_id = #{record.productId,jdbcType=BIGINT},
-      NAME = #{record.name,jdbcType=VARCHAR},
+      sku_name = #{record.skuName,jdbcType=VARCHAR},
       is_deleted = #{record.isDeleted,jdbcType=INTEGER},
       gmt_created = #{record.gmtCreated,jdbcType=TIMESTAMP},
-      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      sku_stock = #{record.skuStock,jdbcType=BIGINT},
+      sku_total = #{record.skuTotal,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -201,8 +223,8 @@
       <if test="productId != null">
         product_id = #{productId,jdbcType=BIGINT},
       </if>
-      <if test="name != null">
-        NAME = #{name,jdbcType=VARCHAR},
+      <if test="skuName != null">
+        sku_name = #{skuName,jdbcType=VARCHAR},
       </if>
       <if test="isDeleted != null">
         is_deleted = #{isDeleted,jdbcType=INTEGER},
@@ -213,16 +235,24 @@
       <if test="gmtModified != null">
         gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       </if>
+      <if test="skuStock != null">
+        sku_stock = #{skuStock,jdbcType=BIGINT},
+      </if>
+      <if test="skuTotal != null">
+        sku_total = #{skuTotal,jdbcType=BIGINT},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.suncaper.demo.entity.Sku">
     update wcss_sku
     set product_id = #{productId,jdbcType=BIGINT},
-      NAME = #{name,jdbcType=VARCHAR},
+      sku_name = #{skuName,jdbcType=VARCHAR},
       is_deleted = #{isDeleted,jdbcType=INTEGER},
       gmt_created = #{gmtCreated,jdbcType=TIMESTAMP},
-      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      sku_stock = #{skuStock,jdbcType=BIGINT},
+      sku_total = #{skuTotal,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.suncaper.demo.mapper.SkuMapper">
    <insert id="ManyInsert" parameterType="java.util.ArrayList">
-      insert into wcss_sku(product_id, NAME) values
+      insert into wcss_sku(product_id, sku_name,sku_stock,sku_total) values
        <foreach collection="skuList" item="sku" separator=",">
-           (#{sku.productId},#{sku.name})
+           (#{sku.productId},#{sku.skuName},#{sku.skuStock},#{sku.skuTotal})
        </foreach>
    </insert>
 </mapper>
