@@ -13,9 +13,7 @@ import java.util.List;
 @Data
 @Accessors(chain = true)
 public class BatchDto extends Batch {
-
     private List<Long> ids;
     private Integer pageNum;
     private Integer pageSize;
-
 }

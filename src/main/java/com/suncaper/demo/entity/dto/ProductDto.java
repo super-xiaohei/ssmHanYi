@@ -1,6 +1,7 @@
 package com.suncaper.demo.entity.dto;
 
 import com.suncaper.demo.entity.Product;
+import com.suncaper.demo.entity.Sku;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -17,5 +18,7 @@ public class ProductDto extends Product {
     private Integer pageNum;
     private Integer pageSize;
     private List<String> oldImg;
+    private List<Sku> sku;
+
 
 }
