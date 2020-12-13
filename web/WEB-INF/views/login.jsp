@@ -58,12 +58,11 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">
-                                记住密码
-                            </label>
-                        </div>
+                        <img id="ValidateCode" src="${PATH}/user/getValidateCode"/>
+                        <a href="javascript:void(0)" id="changeValidateCode">换一张</a>
+                    </div>
+                    <div class="col-8">
+                        <input type="text" style="width: 60px;height: 30px" value="" id="ValidateCodeInput"/>
                     </div>
                     <!-- /.col -->
                     <div class="col-4">
@@ -111,6 +110,10 @@
             $("#sn").val(${loginUser.sn})
             $("#name").val(${loginUser.name})
             $("#password").val(${loginUser.password})
+        })
+        $("#changeValidateCode").click(function () {
+            $("#ValidateCode").attr("src","${PATH}/user/getValidateCode")
+            //$("#ValidateCodeInput").attr("value",${validateCode})
         })
     })
 </script>
