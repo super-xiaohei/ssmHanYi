@@ -1,7 +1,9 @@
 package com.suncaper.demo.controller;
 
 import com.suncaper.demo.common.Constant;
+import com.suncaper.demo.common.JsonResult;
 import com.suncaper.demo.common.SessionUtils;
+import com.suncaper.demo.common.utils.ValidateCodeUtil;
 import com.suncaper.demo.entity.Application;
 import com.suncaper.demo.entity.Knrd;
 import com.suncaper.demo.entity.Student;
@@ -16,6 +18,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * @author zyq
@@ -97,5 +109,23 @@ public class UserController {
     @RequestMapping("/toRetrievePassword")
     public String toRetrievePassword(){
         return "forgotPassword";
+    }
+
+    @RequestMapping("/getValidateCode")
+    public JsonResult getValidateCode(HttpSession session, HttpServletResponse response, Model model) throws Exception {
+        //获取整个验证码的效果
+        BufferedImage validateCodeImage = ValidateCodeUtil.getValidateCodeImage();
+        //获取验证码的时候一定要存到session里面
+        session.setAttribute("validateCodeImage",validateCodeImage);
+        ServletOutputStream outputStream = response.getOutputStream();
+        ImageIO.write(validateCodeImage,"png",outputStream);
+        //获取验证码里面的数字
+        String validateCode = ValidateCodeUtil.getValidateCode();
+        System.out.println("+++++++++++++++++++++++++++++++++++++");
+        System.out.println(validateCode);
+        System.out.println("+++++++++++++++++++++++++++++++++++++");
+        //传到前端页面看看
+        model.addAttribute("validateCode",validateCode.trim());
+        return JsonResult.ok("获取成功");
     }
 }
